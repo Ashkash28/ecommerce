@@ -11,7 +11,12 @@ class Welcome extends CI_Controller {
 
   public function product_desc()
  {
-  $this->load->view('product_desc');
+  $this->load->model('Products_model');
+  $product['product']=$this->Products_model->get_by_id(1);
+  $cat=$product['product']['category'];
+  $product['pictures']=$this->Products_model->get_picture_by_id(1);
+  $product['categories']=$this->Products_model->get_by_category($cat);
+  $this->load->view('product_desc',$product);
  }
 
  
@@ -49,7 +54,7 @@ class Welcome extends CI_Controller {
 
   public function admin()
  {
-  $this->load->view('admin');
+  $this->load->view('admin_login');
  }
 
    public function add_product_page()

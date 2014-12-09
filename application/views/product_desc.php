@@ -24,18 +24,19 @@
 	 margin-left: 500px;
 	}
 
-.shoppingCartColor{
-	color: white;
-}
-	.products div{
+	.shoppingCartColor{
+		color: white;
+	}
+	.products {
 		margin: 10px;
 		display: inline-block;
 	}
 
 	.images {
-		width: 250px;
-		height: 150px;
-		margin: 10px;
+		width: 350px;
+		height: 360px;
+		margin-top: 10px;
+		margin-right: 10px;
 	}
 	
 	.description {
@@ -58,24 +59,30 @@
 	</div>
 	<div class="main_body">
 		<p><a href='/Welcome'>Go Back<a></p>
-		<h2>Black Belt for Staff</h2>
+		<h2><?=$product['name']?></h2>
 		<div class='images'>
-			<img src="American cheese Getty Images.png" alt="Smiley face" height="250" width="250">
-			<img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42">
-			<img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42">
-			<img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42">
-			<img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42">
-			<img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42">
+<?php 	for($i=0;$i<count($pictures);$i++)
+		{
+			if($pictures[$i]['main']==1)
+			{ ?>
+			<img src="<?=$pictures[$i]['description']?>" alt="Smiley face" height="300" width="300">
+<?php 		} 
+		} ?>	
+<?php 	for($i=0;$i<count($pictures);$i++)
+		{
+			if($pictures[$i]['main']!=1)
+			{ ?>
+			<img src="<?=$pictures[$i]['description']?>" alt="Smiley face" height="50" width="50">
+<?php 		} 
+		} ?>
 		</div>
 		<div class='description'>
-			<p>
-				Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product... Description about the product...
-			</p>
+			<p><?=$product['description']?></p>
 			<form action="/Welcome/add_to_cart" method="post">
 				<select name="selection">
-					<option value='1 ($19.99)'>1 ($19.99)</option>
-					<option value='2 ($39.98)'>2 ($39.98)</option>
-					<option value='3 ($59.97)'>3 ($59.97)</option>
+					<option value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>
+					<option value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
+					<option value='3'>3 ($<?= number_format($product['price']*3,2)?>)</option>
 				</select>
 				<input type='submit' name='buy' value='Buy'>
 			</form>
@@ -83,33 +90,16 @@
 	</div>
 	<div>
 		<h3>Similar Items</h3>
+<?php 	for($i=0;$i<count($categories);$i++)
+		{?>
 		<div class='products'>
 			<div>
-				<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-				<p>$5.00</p>
-				<p>Dutch Cheese</p>
-			</div>
-			<div>
-				<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-				<p>$2.00</p>
-				<p>Yellow Cheese</p>
-			</div>
-			<div>
-				<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-				<p>$3.00</p>
-				<p>Vegan Cheese</p>
-			</div>
-			<div>
-				<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-				<p>$5.00</p>
-				<p>Cheese Squares</p>
-			</div>
-			<div>
-				<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-				<p>$2.25</p>
-				<p>American Cheese</p>
-			</div>				
-		</div>		
+				<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
+				<p>$<?= number_format($categories[$i]['price'],2)?></p>
+				<p><?=$categories[$i]['name']?></p>
+			</div>			
+		</div>
+<?php 	}?>		
 	</div>
 </body>
 </html>
