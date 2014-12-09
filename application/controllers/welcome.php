@@ -2,6 +2,8 @@
 
 class Welcome extends CI_Controller {
 
+ 
+//product page functions
  public function index()
  {
   $this->load->view('products');
@@ -12,6 +14,8 @@ class Welcome extends CI_Controller {
   $this->load->view('product_desc');
  }
 
+ 
+//shopping cart functions
   public function cart()
  {
   $this->load->view('cart');
@@ -21,6 +25,12 @@ class Welcome extends CI_Controller {
  {
   $this->load->view('pay_success');
  }
+
+ 
+
+
+
+//admin controller functions
 
   public function orders()
  {

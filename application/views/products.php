@@ -24,6 +24,10 @@
 	 margin-left: 500px;
 	}
 
+	.shoppingCartColor{
+	color: white;
+	}
+
 	.products_index{
 		border: solid 1px black;
 		width: 200px;
@@ -72,7 +76,7 @@
 <body>
    	<div class="header">
    		<h2 id="title">Dojo eCommerce</h2>
-   		<h2 id="shoppingCart">Shopping Cart (5)</h2>
+   		<h2 id="shoppingCart"><a class="shoppingCartColor" href="/Welcome/cart">Shopping Cart (5)</a></h2>
 	</div>
 	<div class="main_body">
 
@@ -109,50 +113,50 @@
 		
 			<div class='products'>
 				<div>
-					<img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$5.00</p>
 					<p>Dutch Cheese</p>
 				</div>
 				<div>
-					<img src="Yellow-Cheese.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="Yellow-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$2.00</p>
 					<p>Yellow Cheese</p>
 				</div>
 				<div>
-					<img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$3.00</p>
 					<p>Vegan Cheese</p>
 				</div><div>
-					<img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$5.00</p>
 					<p>Cheese Squares</p>
 				</div>
 				<div>
-					<img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42"></a>
 					<p>$2.25</p>
 					<p>American Cheese</p>
 				</div>
 				<div>
-					<img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$5.00</p>
 					<p>Dutch Cheese</p>
 				</div>
 				<div>
-					<img src="Yellow-Cheese.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="Yellow-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$2.00</p>
 					<p>Yellow Cheese</p>
 				</div>
 				<div>
-					<img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$3.00</p>
 					<p>Vegan Cheese</p>
 				</div><div>
-					<img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42"></a>
 					<p>$5.00</p>
 					<p>Cheese Squares</p>
 				</div>
 				<div>
-					<img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42">
+					<a href="/Welcome/product_desc"><img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42"></a>
 					<p>$2.25</p>
 					<p>American Cheese</p>
 				</div>
