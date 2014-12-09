@@ -51,7 +51,7 @@
 <body>
    	<div class="header">
    		<h2 id="title">Dojo eCommerce</h2>
-   		<h2 id="shoppingCart">Shopping Cart (5)</h2>
+   		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (5)</a></h2>
 	</div>
 	<div class="main_body">
 		<p><a href='#'>Go Back<a></p>
