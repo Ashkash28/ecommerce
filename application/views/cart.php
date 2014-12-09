@@ -156,7 +156,7 @@ body{
  <body>
  	<div class="header">
  		<h2 id="title">Dojo eCommerce</h2>
- 		<h2 id="shoppingCart"><a id="shoppingCartColor" href="#top">Shopping Cart (5)</a></h2>
+ 		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (5)</a></h2>
  	</div>
  	<div id="cart">
  		<table id="cartTable">
