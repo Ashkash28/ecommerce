@@ -101,17 +101,22 @@
 <?php 	for($i=0;$i<count($categories);$i++)
 		{
 			if($categories[$i]['id'] != $product['id'])
-			{	?>
-				<div class='products'>
-					<div>
-						<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="<?=$product_id_2[0]['description']?>" alt="Smiley face" height="75" width="75"></a>
-						<p>$<?= number_format($categories[$i]['price'],2)?></p>
-						<p><?=$categories[$i]['name']?></p>
-					</div>			
-				</div>
-<?php		}
-		
- 		}?>		
+			{	
+				$products_id=$categories[$i]['id'];
+
+					for($j=0;$j<count($all_pictures);$j++)
+					if(($all_pictures[$j]['products_id'])==$products_id)
+						{ ?>
+							<div class='products'>
+								<div>
+									<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="<?=$all_pictures[$j]['description']?>" alt="Smiley face" height="75" width="75"></a>
+									<p>$<?= number_format($categories[$i]['price'],2)?></p>
+									<p><?=$categories[$i]['name']?></p>
+								</div>			
+							</div>
+<?php 					}				
+			}				
+		} ?>				 		
 	</div>
 </body>
 </html>

@@ -18,11 +18,7 @@ class Welcome extends CI_Controller {
   $cat=$product['product']['category'];
   $product['prod_pictures']=$this->Products_model->get_picture_by_id(1);
   $product['categories']=$this->Products_model->get_by_category($cat);
-  for($i=0;$i<count($product['categories']);$i++)
-      {
-       $cat_pictures="product_id_".$product['categories'][$i]['id']; 
-       $product[$cat_pictures]=$this->Products_model->get_picture_by_id(($product['categories'][$i]));
-      }
+  $product['all_pictures']=$this->Products_model->get_all_pictures();
   $this->load->view('product_desc',$product);
  }
 

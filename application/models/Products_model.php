@@ -26,4 +26,11 @@ class Products_model extends CI_Model {
 		return $this->db->query($query,$id)->result_array();
 
 	}
+
+		function get_all_pictures()
+	{
+		$query="SELECT * from pictures";
+		return $this->db->query($query)->result_array();
+
+	}
 }
