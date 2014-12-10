@@ -63,7 +63,7 @@
 <body>
    	<div class="header">
    		<h2 id="title">Dojo eCommerce</h2>
-   		<h2 id="shoppingCart"><a class="shoppingCartColor" href="/Welcome/cart">Shopping Cart (5)</a></h2>
+   		<h2 id="shoppingCart"><a class="shoppingCartColor" href="/Welcome/cart">Shopping Cart <?= $this->session->userdata('cart')['total_items'] ?></a></h2>
 	</div>
 	<div class="main_body">
 		<p><a href='/Welcome'>Go Back<a></p>
@@ -86,12 +86,13 @@
 		</div>
 		<div class='description'>
 			<p><?=$product['description']?></p>
-			<form action="/Welcome/add_to_cart" method="post">
-				<select name="selection">
-					<option value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>
-					<option value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
-					<option value='3'>3 ($<?= number_format($product['price']*3,2)?>)</option>
+			<form action="/Welcome/add_item_to_cart" method="post">
+				<select name="quantity">
+					<option  value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>
+					<option  value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
+					<option  value='3'>3 ($<?= number_format($product['price']*3,2)?>)</option>
 				</select>
+				<input type='hidden' name='product_id' value='1' />
 				<input type='submit' name='buy' value='Buy'>
 			</form>
 		</div>

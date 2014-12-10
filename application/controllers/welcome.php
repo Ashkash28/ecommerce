@@ -34,7 +34,34 @@ class Welcome extends CI_Controller {
   $this->load->view('pay_success');
  }
 
- 
+ public function add_item_to_cart()
+  {
+    echo "got to add to cart";
+
+    // get item info from post
+    $product_id = $this->input->post('product_id', TRUE);
+    $quantity = $this->input->post('quantity', TRUE);
+    // get current cart
+    $cart = $this->session->userdata('cart');    
+
+    // determine if item exists in cart
+    if(array_key_exists($product_id, $cart))
+    {
+      // item already in cart, update value (quantity) for this item's key in cart
+      $cart['total_items'] +=  $quantity;
+      $cart[$product_id] += $quantity;
+      $this->session->set_userdata('cart', $cart);
+    }
+    else
+    {
+      // add new key=>value pair to cart for new item id=>quantity
+      $cart['total_items'] += $quantity;
+      $cart[$product_id] = $quantity;
+      // populate cart in session
+      $this->session->set_userdata('cart', $cart);
+    }
+    redirect('/Welcome/product_desc');
+  }
 
 
 
