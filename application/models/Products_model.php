@@ -3,8 +3,8 @@ class Products_model extends CI_Model {
 	
 	function get_all_products() 
 	{	
-		$results = $this->db->get('products')->result_array();
-		return $results;
+		$query="SELECT * from products";
+		return $this->db->query($query)->result_array();
 	}
 	
 	function get_by_id($id) 
@@ -24,5 +24,6 @@ class Products_model extends CI_Model {
 	{
 		$query="SELECT * from pictures WHERE products_id=?";
 		return $this->db->query($query,$id)->result_array();
+
 	}
 }

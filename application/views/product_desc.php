@@ -39,6 +39,10 @@
 		margin-right: 10px;
 	}
 	
+	img{
+		margin-top: 10px;
+		margin-right: 5px;
+	}
 	.description {
 		width: 500px;
 		height: 350px;
@@ -48,6 +52,10 @@
 	.images, .description {
 		display: inline-block;
 		vertical-align: top;
+	}
+	#similar{
+		margin-bottom: -15px;
+		margin-top: 20px;
 	}
 </style>
 </head>
@@ -61,20 +69,20 @@
 		<p><a href='/Welcome'>Go Back<a></p>
 		<h2><?=$product['name']?></h2>
 		<div class='images'>
-<?php 	for($i=0;$i<count($pictures);$i++)
-		{
-			if($pictures[$i]['main']==1)
-			{ ?>
-			<img src="<?=$pictures[$i]['description']?>" alt="Smiley face" height="300" width="300">
-<?php 		} 
-		} ?>	
-<?php 	for($i=0;$i<count($pictures);$i++)
-		{
-			if($pictures[$i]['main']!=1)
-			{ ?>
-			<img src="<?=$pictures[$i]['description']?>" alt="Smiley face" height="50" width="50">
-<?php 		} 
-		} ?>
+	<?php 	for($i=0;$i<count($prod_pictures);$i++)
+			{
+				if($prod_pictures[$i]['main']==1)
+				{ ?>
+				<img src="<?=$prod_pictures[$i]['description']?>" alt="Smiley face" height="300" width="300">
+	<?php 		} 
+			} ?>	
+	<?php 	for($i=0;$i<count($prod_pictures);$i++)
+			{
+				if($prod_pictures[$i]['main']!=1)
+				{ ?>
+				<img src="<?=$prod_pictures[$i]['description']?>" alt="Smiley face" height="50" width="50">
+	<?php 		} 
+			} ?>
 		</div>
 		<div class='description'>
 			<p><?=$product['description']?></p>
@@ -89,17 +97,21 @@
 		</div>
 	</div>
 	<div>
-		<h3>Similar Items</h3>
+		<h2 id="similar">Similar Items</h2>
 <?php 	for($i=0;$i<count($categories);$i++)
-		{?>
-		<div class='products'>
-			<div>
-				<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-				<p>$<?= number_format($categories[$i]['price'],2)?></p>
-				<p><?=$categories[$i]['name']?></p>
-			</div>			
-		</div>
-<?php 	}?>		
+		{
+			if($categories[$i]['id'] != $product['id'])
+			{	?>
+				<div class='products'>
+					<div>
+						<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="<?=$product_id_2[0]['description']?>" alt="Smiley face" height="75" width="75"></a>
+						<p>$<?= number_format($categories[$i]['price'],2)?></p>
+						<p><?=$categories[$i]['name']?></p>
+					</div>			
+				</div>
+<?php		}
+		
+ 		}?>		
 	</div>
 </body>
 </html>

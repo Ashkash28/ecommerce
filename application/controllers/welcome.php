@@ -6,7 +6,9 @@ class Welcome extends CI_Controller {
 //product page functions
  public function index()
  {
-  $this->load->view('products');
+  $this->load->model('Products_model');
+  $product['product']=$this->Products_model->get_all_products();
+  $this->load->view('products',$product);
  }
 
   public function product_desc()
@@ -14,8 +16,13 @@ class Welcome extends CI_Controller {
   $this->load->model('Products_model');
   $product['product']=$this->Products_model->get_by_id(1);
   $cat=$product['product']['category'];
-  $product['pictures']=$this->Products_model->get_picture_by_id(1);
+  $product['prod_pictures']=$this->Products_model->get_picture_by_id(1);
   $product['categories']=$this->Products_model->get_by_category($cat);
+  for($i=0;$i<count($product['categories']);$i++)
+      {
+       $cat_pictures="product_id_".$product['categories'][$i]['id']; 
+       $product[$cat_pictures]=$this->Products_model->get_picture_by_id(($product['categories'][$i]));
+      }
   $this->load->view('product_desc',$product);
  }
 
