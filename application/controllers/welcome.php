@@ -67,9 +67,9 @@ class Welcome extends CI_Controller {
 
 //admin controller functions
 
-  public function orders()
+  public function product_inventory()
  {
-  $this->load->view('orders');
+  $this->load->view('product_inventory');
  }
 
    public function order_id()
