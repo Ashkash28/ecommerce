@@ -2,6 +2,14 @@
 <html>
 <head>
 	<title>Add a New Product</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<style>
 	h1 {
 		margin-left: 100px;
@@ -18,7 +26,6 @@
 	}
 	.image {
 		display:block;
-		margin-top: 8px;
 	}
 	#cancel, #preview, #update{
 		display: inline-block;
@@ -60,15 +67,20 @@
 			<label>or add a new cateogry: <input class='field' type='text' name='new_category'></label>
 			<label>Images: <input class='field' type='file' name='image' accept='image/*'></label>
 			<!-- needs jquery draggable content -->
-				<div class='image'>
-					<img src=''>img.png<input type='radio' name='main' value='main'>Main
+			<ul>
+				<li><div class='image'><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+					<img src=''>img.png <input type='radio' name='main' value='main'>Main
 				</div>
-				<div class='image'>
-					<img src=''>img.png<input type='radio' name='main' value='main'>Main
+				</li>
+				<li><div class='image'><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+					<img src=''>img.png <input type='radio' name='main' value='main'>Main
 				</div>
-				<div class='image'>
-					<img src=''>img.png<input type='radio' name='main' value='main'>Main
+				</li>
+				<li><div class='image'><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+					<img src=''>img.png <input type='radio' name='main' value='main'>Main
 				</div>
+				</li>
+			</ul>
 			</form>
 	</div>
 	<div id='buttons'>
