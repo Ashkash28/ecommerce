@@ -53,9 +53,9 @@ class Cart extends CI_Model {
   public function create_order($customer_id,$shipping_id)
   {
   $query = "INSERT INTO `ecommerce`.`orders` 
-		(`order_date`, `customers_id`, `shipping_information_id`,
+		(`order_date`,`order_status` ,`customers_id`, `shipping_information_id`,
 		`created_at`, `updated_at`) 
-		VALUES (Now(),$customer_id,$shipping_id,Now(),Now())";
+		VALUES (Now(),'Order in Process',$customer_id,$shipping_id,Now(),Now())";
    $this->db->query($query);
    $order_id=mysql_insert_id();
    return  $order_id;
