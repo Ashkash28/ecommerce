@@ -3,6 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Dashboard Orders</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$('#statusform').on('click', function(){
+			$.post(
+				$('#statusform').attr('action'),
+				$('#statusform').serialize();
+		}) return false;
+	});
+	</script>
 	<style>
 	body{
 		width:970px;
@@ -86,7 +96,7 @@
 			background-color: #C8C8C8;
 		}
 		.show{
-			margin-left: 450px;
+			margin-left: 430px;
 			vertical-align: top;
 			display: inline;
 		}
@@ -114,7 +124,7 @@
 					<li><a class='orders-products' href='/Welcome/search'>Orders</a></li>
 					<li><a class='orders-products' href='/Welcome/orders'>Products</a></li>
 				</ul>
-			<p id='log-off'><a class='orders-products' href='/Welcome/admin'>log off</a></p>
+			<p id='log-off'><a class='orders-products' href='/Admins/logout'>log off</a></p>
 	</div>
 
 	<div id="search">
@@ -123,8 +133,7 @@
 		</form>
 		<select class="show" name="show">
 			<option value="Show All">Show All</option>
-			<option value="Order In">Order In</option>
-			<option value="Process">Process</option>
+			<option value="Order In">Order in process</option>
 			<option value="Shipped">Shipped</option>
 		</select>
 		<!-- <form id='add-form'action='' method='post'>
@@ -142,7 +151,51 @@
 			<th>State of Order</th>
 		</thead>
 		<tbody>
-			<tr class="gray">
+			<?php
+				foreach($customers as $key => $value) {
+					if($key%2 == 0) {
+					?>
+
+					 <tr class="gray">
+					 	<form action="/Admins/order_id/<?=$value['id']?>" method="post">
+							<td><input type="Submit" name="id_holder" value="<?=$value['id']?>"></td>
+							<td><?=$value['first_name']?></td>
+							<td><?=$value['order_date']?></td>
+							<td><?=$value['address']?></td>
+							<td>$<?=$value['total']?></td>
+							<td>
+								<select action="/Admins/change_status" id="statusform" name="status">
+									<option value="Shipped">Shipped</option>
+									<option value="Order in Process">Order in process</option>
+									<option value="Cancelled">Cancelled</option>
+								</select>
+							</td>
+						</form>
+					</tr>
+
+				<?php } else { ?>
+
+				 <tr>
+				 	<form action="/Admins/order_id/<?=$value['id']?>" method="post">
+						<td><input type="Submit" name="id_holder" value="<?=$value['id']?>"></td>
+						<td><?=$value['first_name']?></td>
+						<td><?=$value['order_date']?></td>
+						<td><?=$value['address']?></td>
+						<td>$<?=$value['total']?></td>
+						<td>
+							<select action="/Admins/change_status" id="statusform" name="status">
+								<option value="Shipped">Shipped</option>
+								<option value="Order in Process">Order in process</option>
+								<option value="Cancelled">Cancelled</option>
+							</select>
+						</td>
+					</form>
+				</tr>
+				<?php } ?>
+
+
+			<?php } ?>
+			<!-- <tr class="gray">
 				<td><a href="/Welcome/order_id">100</a></td>
 				<td>Bob</td>
 				<td>9/6/2014</td>
@@ -225,7 +278,8 @@
 						<option value="Cancelled">Cancelled</option>
 					</select>
 				</td>
-			</tr>
+			</tr> -->
+		</tbody>
 	</table>
 
 	<div class="numbers">
@@ -245,4 +299,3 @@
 	</div>
 </body>
 </html>
-	

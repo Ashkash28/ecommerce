@@ -134,28 +134,28 @@
 	<div class='header'>
 		<h1>Dashboard</h1>
 			<ul>
-				<li><a class='orders-products' href='/Welcome/Search'>Orders</a></li>
+				<li><a class='orders-products' href='/Admins/orders'>Orders</a></li>
 				<li><a class='orders-products' href='/Welcome/Orders'>Products</a></li>
 			</ul>
 		<p id='log-off'><a class='orders-products' href='/Welcome/admin'>log off</a></p>
 	</div>
 	<div id='customer-info'>
-		<h4>Order ID: ##</h4>
+		<h4>Order ID: <?=$customer['id']?></h4>
 		<div class = 'shipping-billing-info'>
 			<p>Customer Shipping Info:</p>
-			<p>name: bob</p>
-			<p>address: 123 dojo way</p>
-			<p>city: seattle</p>
-			<p>state: wa</p>
-			<p>zip: 98133</p>
+			<p>name: <?=$shipping['first_name']?> <?=$shipping['last_name']?></p>
+			<p>address: <?=$shipping['address']?> <?=$shipping['address_2']?></p>
+			<p>city: <?=$shipping['city']?></p>
+			<p>state: <?=$shipping['state']?></p>
+			<p>zip: <?=$shipping['zipcode']?></p>
 		</div>
 		<div class = 'shipping-billing-info'>
 			<p>Customer billing info:</p>
-			<p>name: bob</p>
-			<p>address: 123 dojo way</p>
-			<p>city: seattle</p>
-			<p>state: wa</p>
-			<p>zip: 98133</p>
+			<p>name: <?=$customer['first_name']?> <?=$customer['last_name']?></p>
+			<p>address: <?= $customer['address']?> <?=$customer['address_2']?></p>
+			<p>city: <?= $customer['city']?></p>
+			<p>state: <?= $customer['state']?></p>
+			<p>zip: <?= $customer['zipcode']?></p>
 		</div>
 	</div>
 	<table>
@@ -166,7 +166,22 @@
 			<th>Quantity</th>
 			<th>Total</th>
 		</tr>
-		<tr class='gray'>
+		<?php 
+		foreach($products as $product)
+		{  
+			if($product%2) {?>
+
+				<tr class='gray'>
+					<td><?=$product['id']?></td>
+					<td><?=$product['name']?></td>
+					<td>$<?=$product['price']?></td>
+					<td><?=$product['quantity']?></td>
+					<td><?= $product['quantity'] * $product['price']?></td>
+				</tr>		
+		<?php }
+		} ?>
+
+		<!-- <tr class='gray'>
 			<td>35</td>
 			<td>cup</td>
 			<td>$9.99</td>
@@ -179,21 +194,39 @@
 			<td>$19.99</td>
 			<td>2</td>
 			<td>$39.98</td>
-		</tr>
+		</tr> -->
 	</table>
 	<div class='order-shipped'>
 		<p>Status: shipped</p>
 	</div>
-<!-- 	<div class='order-process'>
-		<p>Status: Order in Process</p>
-	</div>
-	<div class='order-cancelled'>
-		<p>Status: Cancelled</p>
-	</div> -->
+	<?php 
+		if($product['order_status'] == 'Shipped')
+			{ ?>
+			<div class='order-shipped'>
+				<p>Status: shipped</p>
+			</div>
+<?php } elseif($product['order_status'] == 'Order in process')
+{ ?>
+				<div class='order-process'>
+					<p>Status: Order in Process</p>
+				</div>
+<?php } else { ?>
+				<div class='order-cancelled'>
+					<p>Status: Cancelled</p>
+				</div>
+			<?php }?>
 	<div id='total'>
-		<p>Sub total: $49.97</p>
-		<p>Shipping: $1.00</p>
-		<p>Total Price: $50.97</p>
+		<p>Sub total: $<?php
+			$total = 0;
+			foreach($products as $product)
+				{
+					$temp = $product['quantity'] * $product['price'];
+					$total= $total + $temp;
+				}
+				echo $total;
+				?></p>
+		<p>Shipping: $<?= $shipping['price']?></p>
+		<p>Total Price: $<?= $total + $shipping['price']?></p>
 	</div>
 </body>
 </html>

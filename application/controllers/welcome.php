@@ -49,7 +49,7 @@ class Welcome extends CI_Controller {
 
   public function admin()
  {
-  $this->load->view('admin');
+  $this->load->view('admin_login');
  }
 
    public function add_product_page()
