@@ -33,7 +33,6 @@
  	<div>
  		<h1>Thanks for shopping with us today</h1>
  		<h1>You now own part of america</h1>
- 		<h1><a href="/Welcome">Continue Shopping</h1>
     </div>
  </body>
  </html>

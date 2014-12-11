@@ -8,6 +8,8 @@ class Welcome extends CI_Controller {
  {
   $this->load->model('Products_model');
   $product['product']=$this->Products_model->get_all_products();
+  $product['categories']=$this->Products_model->get_all_categories();
+  $product['category']='All Products';
   if(($this->session->userdata('cart')['total_items'])==0)
     {
     $empty=array('total_items'=>0);
@@ -21,6 +23,25 @@ class Welcome extends CI_Controller {
   $this->load->view('products',$product);
  }
 
+  public function product_category($category)
+  {
+    $this->load->model('Products_model');
+    $product['product']=$this->Products_model->get_by_category($category);
+    $product['categories']=$this->Products_model->get_all_categories();
+    $product['category']=$category;
+    if(($this->session->userdata('cart')['total_items'])==0)
+    {
+    $empty=array('total_items'=>0);
+    $cart=$this->session->set_userdata('cart',$empty);
+    }
+    else
+    {
+      $cart = $this->session->userdata('cart'); 
+    }
+
+  $this->load->view('products',$product);
+  }
+
   public function product_desc($id)
  {
   $this->load->model('Products_model');
@@ -32,6 +53,35 @@ class Welcome extends CI_Controller {
   $this->load->view('product_desc',$product);
  }
 
+public function search()
+{
+  $search=$this->input->post('productName');
+  if ($search==null)
+  {
+    redirect ('/');
+  }
+  $this->load->model('Products_model');
+  $searchResults=$this->Products_model->search_products($search);
+  if(count($searchResults)<1)
+  {
+    redirect ('/');
+  }
+  $product['product']=$searchResults;
+  $product['categories']=$this->Products_model->get_all_categories();
+  $product['category']=$search;
+  if(($this->session->userdata('cart')['total_items'])==0)
+    {
+    $empty=array('total_items'=>0);
+    $cart=$this->session->set_userdata('cart',$empty);
+    }
+    else
+    {
+      $cart = $this->session->userdata('cart'); 
+    }
+
+  $this->load->view('products',$product);
+
+}
  
 //shopping cart functions
  public function cart()
@@ -209,11 +259,11 @@ class Welcome extends CI_Controller {
       if($key !== 'total_items')
       {
         $price=$this->Cart->add_to_products_has_orders($order_id,$key,$value);
-        $subtotal=$price['price']*$value;
-        $product_total+=$subtotal;
       }
     }
-  $this->Cart->update_order($product_total,$order_id);
+  $empty=array('total_items'=>0);
+  $cart=$this->session->set_userdata('cart',$empty);
+  $cart = $this->session->userdata('cart');
   $this->load->view('pay_success',$order_id);
  }
 

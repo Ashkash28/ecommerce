@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>User page 1</title>	
+	<title>All Products</title>	
 
 <style type="text/css">
 	
@@ -43,7 +43,6 @@
 		
 		border: solid 1px black;
 		width: 750px;
-		height: 500px;
 		margin-top: 10px;
 
 	}
@@ -67,7 +66,7 @@
 		display: inline-block;
 	}
 
-	.shirt {
+	.category {
 		font-size: 32px;
 		margin-right: 300px;
 
@@ -85,25 +84,26 @@
 	<div class="main_body">
 
 		<div class="products_index">
-			<form>
-				<input type='search' value='product name'>
-				<input type='submit'>
+			<form action="/Welcome/search" method="post">
+				<input type='search' name="productName">
+				<input type='submit' name="search" value="search">
 			</form>
 			<ul>
 				<li>Categories</li>
 					<ul>
-						<li><a href="">T-shirts (<insert number)</a></li>
-						<li><a href="">Shoes (35)</a></li>
-						<li><a href="">Cups (5)</a></li>
-						<li><a href="">Fruits (105)</a></li>
-						<li><a href="">Show all</a></li>
+<?php 
+			foreach($categories as $key)
+			{ ?>
+				<li><a href="/Welcome/product_category/<?= $key['category']?>"><?= $key['category']." (".$key['count']?>)</a></li>
+<?php		} ?>
 					</ul>
+				<li><a href="/Welcome/">Show All</a></li>
 			</ul>
 		</div>
 
 		<div class='products_view'>
 			<div class='products_title'>
-				<p class='shirt'>T-shirts (page 2<show page number>)</p>
+				<p class='category'><?=$category?></p>
 				<p><a href="">first</a>| </p>
 				<p><a href="">previous</a>| </p>
 				<p>2| </p>
@@ -114,56 +114,16 @@
 				<option value='Price'>Price</option>
 				<option value='Most Popular'>Most Popular</option>
 			</select>
-		
 			<div class='products'>
+<?php 
+			foreach($product as $key)
+			{ ?>
 				<div>
-					<a href="/Welcome/product_desc/1"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$5.00</p>
-					<p>Dutch Cheese</p>
+					<a href="/Welcome/product_desc/<?=$key['id']?>"><img src="<?=$key['description']?>" alt="Smiley face" height="200" width="200"></a>
+					<p><?=$key['price']?></p>
+					<p><?=$key['name']?></p>
 				</div>
-				<div>
-					<a href="/Welcome/product_desc/1"><img src="Yellow-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$2.00</p>
-					<p>Yellow Cheese</p>
-				</div>
-				<div>
-					<a href="/Welcome/product_desc/1"><img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$3.00</p>
-					<p>Vegan Cheese</p>
-				</div><div>
-					<a href="/Welcome/product_desc/1"><img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$5.00</p>
-					<p>Cheese Squares</p>
-				</div>
-				<div>
-					<a href="/Welcome/product_desc"><img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42"></a>
-					<p>$2.25</p>
-					<p>American Cheese</p>
-				</div>
-				<div>
-					<a href="/Welcome/product_desc"><img src="cheese-dutchleerdammer.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$5.00</p>
-					<p>Dutch Cheese</p>
-				</div>
-				<div>
-					<a href="/Welcome/product_desc"><img src="Yellow-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$2.00</p>
-					<p>Yellow Cheese</p>
-				</div>
-				<div>
-					<a href="/Welcome/product_desc"><img src="Vegan-Muenster-Cheese.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$3.00</p>
-					<p>Vegan Cheese</p>
-				</div><div>
-					<a href="/Welcome/product_desc"><img src="Cheese_Squares.jpg" alt="Smiley face" height="42" width="42"></a>
-					<p>$5.00</p>
-					<p>Cheese Squares</p>
-				</div>
-				<div>
-					<a href="/Welcome/product_desc"><img src="American cheese Getty Images.png" alt="Smiley face" height="42" width="42"></a>
-					<p>$2.25</p>
-					<p>American Cheese</p>
-				</div>
+<?php		} ?>
 			</div>
 			<div class='page_toggle'>
 				<p><a href="">1</a>|</p>
