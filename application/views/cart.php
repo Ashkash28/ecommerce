@@ -104,6 +104,14 @@ body{
 	width: 970px;
 }
 
+.total{
+	text-align: left;
+}
+
+.quantity{
+	text-align: center;
+}
+
 #shipping, #billing{
 	margin-left: 150px;
 }
@@ -129,13 +137,16 @@ body{
 
 .zbox{
 	margin-left: 15px;
+	width: 175px;
 }
 
 .ccbox{
 	margin-left: 24px;
+	width: 175px;
 }
 .scbox{
 	margin-left: 15px;
+	width: 175px;
 }
 .month{
 	margin-left: 2px;
@@ -156,7 +167,16 @@ body{
  <body>
  	<div class="header">
  		<h2 id="title">Dojo eCommerce</h2>
- 		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (5)</a></h2>
+ 		
+<?php 
+		if((!$this->session->userdata('cart'))OR (count($cart)<1))
+		{ ?>
+			<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (0)</a></h2>
+<?php  	}
+ 		else
+ 		{ ?>
+ 		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (<?= $this->session->userdata('cart')['total_items'] ?>)</a></h2>
+<?php   }?>
  	</div>
  	<div id="cart">
  		<table id="cartTable">
@@ -170,92 +190,100 @@ body{
  				<tr>
  			</thead>
  			<tbody>
- 				<tr class="odd">
- 					<td class="item">Brooklyn Bridge</td>
- 					<td class="price">$ 299.99</td>
- 					<td class="quantity">1</td>
- 					<td class="update"><a href="#top">update</a><img style="width:44px;height:38px" src="/Welcome/trash.png" ></td>
- 					<td class="total">$ 299.99</td>
- 				</tr>
-				<tr>
-					<td class="item">Brooklyn Bridge</td>
- 					<td class="price">$ 299.99</td>
- 					<td class="quantity">1</td>
- 					<td class="update"><a href="#top">update</a> @</td>
- 					<td class="total">$ 299.99</td>
- 				</tr>
- 				<tr class="odd">
- 					<td class="item">Brooklyn Bridge</td>
- 					<td class="price">$ 299.99</td>
- 					<td class="quantity">1</td>
- 					<td class="update"><a href="#top">update</a> @</td>
- 					<td class="total">$ 299.99</td>
- 				</tr>
-				<tr>
-					<td class="item">Brooklyn Bridge</td>
- 					<td class="price">$ 299.99</td>
- 					<td class="quantity">1</td>
- 					<td class="update"><a href="#top">update</a> @</td>
- 					<td class="total">$ 299.99</td>
- 				</tr>
-				<tr class="odd">
+<?php 	
+        	 if((!$this->session->userdata('cart'))OR (count($cart)<1))
+        	{ ?>
+        		<tr class="even">
 					<td class="item">&nbsp</td>
  					<td class="price"></td>
  					<td class="quantity"></td>
  					<td class="update"><a href="#top"></a></td>
  					<td class="total"></td>
 				</tr>
-				<tr>
-					<td class="item">&nbsp</td>
- 					<td class="price"></td>
- 					<td class="quantity"></td>
- 					<td class="update"><a href="#top"></a></td>
- 					<td class="total"></td>
-				</tr>
+
+<?php       }
+				else
+			{	
+	          $i=1;
+	          foreach($cart as $key => $value)
+	          {            
+	            if($key !== 'total_price')
+	            { 
+	              if($i%2)
+	              {
+	              	$rowColor = 'class="even"';
+	          	  } 
+	          	  else          	  
+	          	  {
+	          	  	$rowColor = 'class="odd"';
+	          	  }?>
+	              <tr <?=$rowColor?>>
+	                <td class="item"><?= $value['name'] ?></td>
+	                <td class="price"><?= $value['price'] ?></td>                
+	                <form action="/Welcome/update/<?= $value['id']?>" method="post">
+	                <td><input class="quantity" type="number" min="1" max="10" name="cartQuantity" value="<?= $value['quantity'] ?>"></td>
+	                <td class="update"><input type='submit' name="update" value="update">
+	                </form>    <a href="/Welcome/delete/<?= $value['id'] ?>">remove</a></td>
+	                <td class="total">$ <?= number_format($value['total'],2) ?></td>
+	              </tr>
+	<?php     $i++;
+       			}
+          	  }  
+          	}  ?>
 			</tbody>
 		</table>
 	</div>
 	<div id="cartTotal">
-		<h3>Total: $ 19,999.00</h3>
+<?php 
+		if((!$this->session->userdata('cart'))OR (count($cart)<1))
+		{ ?>
+			<h3>Total: $ --.--</h3>
+<?php		$total_items=array();
+			$this->session->set_userdata('cart')['total_items'];
+ 		}
+		else
+		{ ?>
+		<h3>Total: $ <?= number_format($cart['total_price'],2) ?></h3>
+<?php 	} ?>
 		<a href="/Welcome"><button>Continue Shopping</button></a> 
 	</div>
 	<div id="shipping">
 	    <h2>Shipping Information</h2>
-		   <form action="/Welcome/pay_success" method="post">
-		    <p>First Name: <input type="text" name="sfname"></p>
-		    <p>Last Name: <input  type="text" name="slname"></p>
-		    <p>Address: <input class="abox" type="text" name="saddress"></p>
-		    <p>Address 2: <input class="abox2" type="text" name="saddress2"></p>
-		    <p>City: <input class="cbox" type="text" name="sCity"></p>
-		    <p>State: <input class="sbox" type="text" name="sState"></p>
-		    <p>Zipcode: <input class="zbox" type="text" name="sZipcode"></p>
+		   <form action="/Welcome/pay" method="post">
+		    <p>First Name: <input type="text" name="sfname" value="James"></p>
+		    <p>Last Name: <input  type="text" name="slname" value="Kirk"</p>
+		    <p>Address: <input class="abox" type="text" name="saddress" value="123 Galaxy way"></p>
+		    <p>Address 2: <input class="abox2" type="text" name="saddress2" value="#F-139"></p>
+		    <p>City: <input class="cbox" type="text" name="sCity" value="Riverside"></p>
+		    <p>State: <input class="sbox" type="text" name="sState" value="IA"></p>
+		    <p>Zipcode: <input class="zbox" type="number" name="sZipcode" value="65824"></p>
     </div>
     <div id="billing">
 		<h2>Billing Info</h2>
 		    <input type="checkbox" id="sas"> Same as Shipping
-		    <p>First Name: <input class="fnbox" type="text" name="bfname"></p>
-		    <p>Last Name: <input class="lnbox" type="text" name="blname"></p>
-		    <p>Address: <input class="abox" type="text" name="baddress"></p>
+		    <p>First Name: <input class="fnbox" type="text" name="bfname" value="Mr"></p>
+		    <p>Last Name: <input class="lnbox" type="text" name="blname" value="Spock"></p>
+		    <p>Address: <input class="abox" type="text" name="baddress" value="55 planet road"></p>
 		    <p>Address 2: <input class="abox2" type="text" name="baddress2"></p>
-		    <p>City: <input class="cbox" type="text" name="bCity"></p>
-		    <p>State: <input class="sbox" type="text" name="bState"></p>
-		    <p>Zipcode: <input class="zbox" type="text" name="bZipcode"></p>
-		    <p>Card #: <input class="ccbox" type="text" name="cardnum"></p>
-		    <p>Security: <input class="scbox" type="text" name="security"></p>
+		    <p>City: <input class="cbox" type="text" name="bCity" value="Cape Canaviral"></p>
+		    <p>State: <input class="sbox" type="text" name="bState" value="FL"></p>
+		    <p>Zipcode: <input class="zbox" type="number" name="bZipcode" value="12345"></p>
+		    <p>Card #: <input class="ccbox" type="number" name="cardnum" value="1234567887654321"></p>
+		    <p>Security: <input class="scbox" type="number" name="security" value="123"></p>
 		    <p>Expiration: <select class="month" type="month" name="month">
 							   <option value="(mm)">(mm)</option>
-							   <option value="jan">Jan</option>
-							   <option value="feb">Feb</option>
-							   <option value="mar">Mar</option>
-							   <option value="apr">Apr</option>
-							   <option value="may">May</option>
-							   <option value="june">June</option>
-							   <option value="july">July</option>
-							   <option value="aug">Aug</option>
-							   <option value="sept">Sept</option>
-							   <option value="Oct">Oct</option>
-							   <option value="nov">Nov</option>
-							   <option value="dec">Dec</option>
+							   <option value="01">Jan</option>
+							   <option value="02">Feb</option>
+							   <option value="03">Mar</option>
+							   <option value="04">Apr</option>
+							   <option value="05">May</option>
+							   <option value="06">June</option>
+							   <option value="07">July</option>
+							   <option value="08">Aug</option>
+							   <option value="09">Sept</option>
+							   <option value="10">Oct</option>
+							   <option value="11">Nov</option>
+							   <option value="12">Dec</option>
 							</select> / 
 							<input class="year" type="number" min="2009" max="2019" name="year" value="year"></p>
 		    <input class="pay" type="submit" value="Pay">

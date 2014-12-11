@@ -27,9 +27,15 @@
 	.shoppingCartColor{
 		color: white;
 	}
+
+	#shoppingCartColor{
+	color: white;
+}
+
 	.products {
 		margin: 10px;
 		display: inline-block;
+
 	}
 
 	.images {
@@ -56,15 +62,22 @@
 	#similar{
 		margin-bottom: -15px;
 		margin-top: 20px;
+		margin-left: 400px;
 	}
+
+	#photoCredit{
+		margin-left: 650px;
+		font-size: 12px;
+	}
+
 </style>
 </head>
 
 <body>
-   	<div class="header">
-   		<h2 id="title">Dojo eCommerce</h2>
-   		<h2 id="shoppingCart"><a class="shoppingCartColor" href="/Welcome/cart">Shopping Cart <?= $this->session->userdata('cart')['total_items'] ?></a></h2>
-	</div>
+ 	<div class="header">
+ 		<h2 id="title">Dojo eCommerce</h2>
+ 		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (<?= $this->session->userdata('cart')['total_items'] ?>)</a></h2>
+ 	</div>
 	<div class="main_body">
 		<p><a href='/Welcome'>Go Back<a></p>
 		<h2><?=$product['name']?></h2>
@@ -92,13 +105,13 @@
 					<option  value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
 					<option  value='3'>3 ($<?= number_format($product['price']*3,2)?>)</option>
 				</select>
-				<input type='hidden' name='product_id' value='1' />
+				<input type='hidden' name='product_id' value='<?=$product['id']?>' />
 				<input type='submit' name='buy' value='Buy'>
 			</form>
 		</div>
 	</div>
-	<div>
-		<h2 id="similar">Similar Items</h2>
+	<div id="similar">
+		<h2 >Similar Items</h2>
 <?php 	for($i=0;$i<count($categories);$i++)
 		{
 			if($categories[$i]['id'] != $product['id'])
@@ -118,6 +131,9 @@
 <?php 					}				
 			}				
 		} ?>				 		
+	</div>
+	<div id="photoCredit">
+		<p>Photo credit: http://www.pachd.com/index.html</p>
 	</div>
 </body>
 </html>
