@@ -6,12 +6,20 @@ class Welcome extends CI_Controller {
 //product page functions
  public function index()
  {
-  $this->load->view('products');
+  $this->load->model('Products_model');
+  $product['product']=$this->Products_model->get_all_products();
+  $this->load->view('products',$product);
  }
 
   public function product_desc()
  {
-  $this->load->view('product_desc');
+  $this->load->model('Products_model');
+  $product['product']=$this->Products_model->get_by_id(1);
+  $cat=$product['product']['category'];
+  $product['prod_pictures']=$this->Products_model->get_picture_by_id(1);
+  $product['categories']=$this->Products_model->get_by_category($cat);
+  $product['all_pictures']=$this->Products_model->get_all_pictures();
+  $this->load->view('product_desc',$product);
  }
 
  
@@ -26,15 +34,42 @@ class Welcome extends CI_Controller {
   $this->load->view('pay_success');
  }
 
- 
+ public function add_item_to_cart()
+  {
+    echo "got to add to cart";
+
+    // get item info from post
+    $product_id = $this->input->post('product_id', TRUE);
+    $quantity = $this->input->post('quantity', TRUE);
+    // get current cart
+    $cart = $this->session->userdata('cart');    
+
+    // determine if item exists in cart
+    if(array_key_exists($product_id, $cart))
+    {
+      // item already in cart, update value (quantity) for this item's key in cart
+      $cart['total_items'] +=  $quantity;
+      $cart[$product_id] += $quantity;
+      $this->session->set_userdata('cart', $cart);
+    }
+    else
+    {
+      // add new key=>value pair to cart for new item id=>quantity
+      $cart['total_items'] += $quantity;
+      $cart[$product_id] = $quantity;
+      // populate cart in session
+      $this->session->set_userdata('cart', $cart);
+    }
+    redirect('/Welcome/product_desc');
+  }
 
 
 
 //admin controller functions
 
-  public function orders()
+  public function product_inventory()
  {
-  $this->load->view('orders');
+  $this->load->view('product_inventory');
  }
 
    public function order_id()

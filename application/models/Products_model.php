@@ -3,15 +3,34 @@ class Products_model extends CI_Model {
 	
 	function get_all_products() 
 	{	
-		$results = $this->db->get('products')->result_array();
-		return $results;
+		$query="SELECT * from products";
+		return $this->db->query($query)->result_array();
 	}
 	
 	function get_by_id($id) 
 	{		
-		$results = $this->db->get_where('products', array('id' => $id))->result();
-		$result = $results[0];	
-		return $result;
+		$query="SELECT * from products WHERE id=?";
+		return $this->db->query($query,$id)->row_array();
+
+	}
+
+	function get_by_category($cat) 
+	{		
+		$query="SELECT * from products WHERE category=?";
+		return $this->db->query($query,$cat)->result_array();
 	}
 	
+	function get_picture_by_id($id)
+	{
+		$query="SELECT * from pictures WHERE products_id=?";
+		return $this->db->query($query,$id)->result_array();
+
+	}
+
+		function get_all_pictures()
+	{
+		$query="SELECT * from pictures";
+		return $this->db->query($query)->result_array();
+
+	}
 }
