@@ -14,7 +14,7 @@ class Cart extends CI_Model {
   }
 
   //needed to submit order after Pay is clicked
-  //first, add customer and billing info to database and return customer id
+  //first step, add customer and billing info to database and return customer id
   public function create_customer($billing)
   {
   	$query = "INSERT INTO `ecommerce`.`customers` 
@@ -32,7 +32,7 @@ class Cart extends CI_Model {
   }
 
   //needed to submit order after Pay is clicked
-  //second, add shipping info to databsse and return shipping id
+  //second step, add shipping info to databsse and return shipping id
   public function create_shipping($shipping)
   {
   	$price=rand(2, 20);
@@ -48,15 +48,8 @@ class Cart extends CI_Model {
    return  $shipping_id;
   }
 
-  public function shipping_price($shipping_id)
-  {
-  	$query="SELECT price from shipping_information 
-  			WHERE shipping_information.id=$shipping_id";
-  	return $this->db->query($query)->row_array();
-  }
-
   //needed to submit order after Pay is clicked
-  //third, add order info to databsse and return order id
+  //third step, add order info to databsse and return order id
   public function create_order($customer_id,$shipping_id)
   {
   $query = "INSERT INTO `ecommerce`.`orders` 
@@ -69,7 +62,7 @@ class Cart extends CI_Model {
   }
 
   //needed to submit order after Pay is clicked
-  //fourth, add order details to the product_has_orders table
+  //fourth step, add order details to the product_has_orders table
  
   public function add_to_products_has_orders($order_id,$key,$value)
   {  	
@@ -83,7 +76,7 @@ class Cart extends CI_Model {
   }
 
     //needed to submit order after Pay is clicked
-   //update orders table with total
+   //fifth step, update orders table with product total
   public function update_order($total, $order_id)
   {
   	$query = "UPDATE `ecommerce`.`orders` 

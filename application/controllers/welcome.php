@@ -18,7 +18,6 @@ class Welcome extends CI_Controller {
       $cart = $this->session->userdata('cart'); 
     }
 
-
   $this->load->view('products',$product);
  }
 
@@ -140,20 +139,16 @@ class Welcome extends CI_Controller {
     $product_id = $cartProductId;
     $quantity = $cartQuantity;
 
-
     // get current cart
     $cart = $this->session->userdata('cart'); 
 
-      // add new key=>value pair to cart for new item id=>quantity
-      $cart['total_items'] += $quantity;
-      $cart[$product_id] = $quantity;
-      // populate cart in session
-      $this->session->set_userdata('cart', $cart);
+    // add new key=>value pair to cart for new item id=>quantity
+    $cart['total_items'] += $quantity;
+    $cart[$product_id] = $quantity;
+    // populate cart in session
+    $this->session->set_userdata('cart', $cart);
     redirect('/Welcome/cart/');
-
-
   }
-
 
   public function delete($id)
   {
@@ -177,7 +172,7 @@ class Welcome extends CI_Controller {
   //get cart information
  $cart=$this->session->userdata('cart');
 
-  //get shipping info, this comes from post data
+  //get shipping info from post data
   $shipping = array(
     'sfname' => $this->input->post('sfname'),
     'slname' => $this->input->post('slname'),
@@ -187,7 +182,7 @@ class Welcome extends CI_Controller {
     'sState' => $this->input->post('sState'),
     'sZipcode' => $this->input->post('sZipcode'),
   );
-  //get billing info, this comes from post data
+  //get billing info from post data
 
     $billing = array(
     'bfname' => $this->input->post('bfname'),
@@ -202,7 +197,6 @@ class Welcome extends CI_Controller {
     'month' => $this->input->post('month'),
     'year' => $this->input->post('year'),
   );
-    $allData['billing']=$billing;
     
   //now, submit all order data to the database
   $this->load->model('Cart');
@@ -219,51 +213,15 @@ class Welcome extends CI_Controller {
         $product_total+=$subtotal;
       }
     }
-  $shipping_price=$this->Cart->shipping_price($shipping_id);
-  $total=$shipping_price['price']+$product_total;
-  $this->Cart->update_order($total,$order_id);
+  $this->Cart->update_order($product_total,$order_id);
   $this->load->view('pay_success',$order_id);
  }
 
 //admin controller functions
-
-  public function product_inventory()
- {
-  $this->load->view('product_inventory');
- }
-
-   public function order_id()
- {
-  $this->load->view('order_id');
- }
-
-   public function search()
- {
-  $this->load->view('search');
- }
-
   public function admin()
  {
   $this->load->view('admin_login');
  }
-
-   public function add_product_page()
- {
-  $this->load->view('add_product_page');
- }
-
-    public function product_delete()
- {
-  $this->load->view('product_delete');
- }
-
-
-
-
-
-
- 
-
 
 }
 
