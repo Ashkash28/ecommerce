@@ -304,7 +304,7 @@ public function search()
     {     
       if($key !== 'total_items')
       {
-        $price=$this->Cart->add_to_products_has_orders($order_id,$key,$value);
+        $this->Cart->add_to_products_has_orders($order_id,$key,$value);
       }
     }
   $empty=array('total_items'=>0);

@@ -69,19 +69,12 @@ class Cart extends CI_Model {
 	$query = "INSERT INTO `ecommerce`.`products_has_orders` 
 			(`orders_id`, `products_id`, `products_quantity`) 
 			VALUES ($order_id, $key, $value)";
-	$this->db->query($query);
-
-	$query1 = "SELECT price FROM products where id=$key";
-	return $this->db->query($query1)->row_array();	
-  }
-
-    //needed to submit order after Pay is clicked
-   //fifth step, update orders table with product total
-  public function update_order($total, $order_id)
-  {
-  	$query = "UPDATE `ecommerce`.`orders` 
-  			SET `total`=$total WHERE `id`=$order_id";
-  			return $this->db->query($query);
-  }
-
+  $this->db->query($query);
+  $query1="UPDATE products SET inventory_count = inventory_count - $value 
+      WHERE id=$key";
+  $this->db->query($query1);
+  $query2="UPDATE products SET quantity_sold = quantity_sold + $value 
+      WHERE id=$key";
+  $this->db->query($query2);
+  }   
 }
