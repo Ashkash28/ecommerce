@@ -1,6 +1,28 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>All Products</title>	
+	<meta charset="utf-8">
+	<title>All Products</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			$(document).keypress("#search",function(e) 
+			{
+    			if(e.which == 13) 
+    			{
+    			}
+    		});
+    		
+    		$("#sortBy").change(function() 
+    		{ 
+				$('#formSort').submit();
+    		
+    		});
+		});
+	</script>
+
 
 <style type="text/css">
 	
@@ -57,7 +79,6 @@
 	}
 
 	.products_index, .products_view {
-
 		display: inline-block;
 		vertical-align: top;
 	}
@@ -69,10 +90,8 @@
 	.category {
 		font-size: 32px;
 		margin-right: 300px;
-
 	}
 
-	
 </style>
 </head>
 
@@ -85,8 +104,7 @@
 
 		<div class="products_index">
 			<form action="/Welcome/search" method="post">
-				<input type='search' name="productName">
-				<input type='submit' name="search" value="search">
+				<input type='search' id="search" name="productName" placeholder="product search">
 			</form>
 			<ul>
 				<li>Categories</li>
@@ -100,7 +118,6 @@
 				<li><a href="/Welcome/">Show All</a></li>
 			</ul>
 		</div>
-
 		<div class='products_view'>
 			<div class='products_title'>
 				<p class='category'><?=$category?></p>
@@ -109,18 +126,21 @@
 				<p>2| </p>
 				<p><a href="">next</a></p>
 			</div>
-			<p>Sorted by</p>
-			<select>
-				<option value='Price'>Price</option>
-				<option value='Most Popular'>Most Popular</option>
-			</select>
+			<p>Sorted by: <?=$this->session->userdata('sortBy')?></p>
+			<form id="formSort" action="/Welcome/sortBy" method="post">
+				<select id="sortBy" name="sortBy">
+					<option value='blank'>-Sort By-</option>
+					<option value='price'>Price (low-high)</option>
+					<option value='quantity_sold'>Most Popular</option>
+				</select>
+			</form>
 			<div class='products'>
 <?php 
 			foreach($product as $key)
 			{ ?>
 				<div>
 					<a href="/Welcome/product_desc/<?=$key['id']?>"><img src="<?=$key['description']?>" alt="Smiley face" height="200" width="200"></a>
-					<p><?=$key['price']?></p>
+					<p>$<?= number_format($key['price'],2)?></p>
 					<p><?=$key['name']?></p>
 				</div>
 <?php		} ?>

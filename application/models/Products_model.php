@@ -3,14 +3,36 @@ class Products_model extends CI_Model {
 	
 	function get_all_products() 
 	{	
-		// $query="SELECT * from products ORDER BY price DESC";
+		// $query="SELECT * from products ORDER BY price ASC";
 
 		$query="SELECT products.name, products.price, products.id,pictures.description
 			from products
 			join pictures
 			on products.id=pictures.products_id
 			where pictures.main=1
-			order by products.price ASC";
+			order by products.price DESC";
+		return $this->db->query($query)->result_array();
+	}
+
+		function get_all_products_sort($sortBy) 
+	{	
+		$query="SELECT products.name, products.price, products.id,pictures.description
+			from products
+			join pictures
+			on products.id=pictures.products_id
+			where pictures.main=1
+			order by products.$sortBy";
+		return $this->db->query($query)->result_array();
+	}
+
+		function get_all_products_sort_category($sortBy, $category) 
+	{	
+		$query="SELECT products.name, products.price, products.id,pictures.description
+			from products
+			join pictures
+			on products.id=pictures.products_id
+			where pictures.main=1 AND products.category='$category'
+			order by products.$sortBy";
 		return $this->db->query($query)->result_array();
 	}
 	

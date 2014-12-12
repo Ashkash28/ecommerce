@@ -6,6 +6,7 @@ class Welcome extends CI_Controller {
 //product page functions
  public function index()
  {
+  $this->session->unset_userdata('categ');
   $this->load->model('Products_model');
   $product['product']=$this->Products_model->get_all_products();
   $product['categories']=$this->Products_model->get_all_categories();
@@ -19,7 +20,50 @@ class Welcome extends CI_Controller {
     {
       $cart = $this->session->userdata('cart'); 
     }
+  $this->load->view('products',$product);
+ }
 
+  public function sortBy()
+ {
+  $sortBy=$this->input->post('sortBy');
+  if($sortBy=='blank')
+  {
+    redirect('/');
+  }  
+  $this->load->model('Products_model');
+
+  if(!$this->session->userdata('categ'))
+    {
+      echo "reached if loop";
+      $product['product']=$this->Products_model->get_all_products_sort($sortBy);
+      $product['categories']=$this->Products_model->get_all_categories();
+      $product['category']='All Products';
+    }
+    else if($this->session->userdata('categ'))
+    {
+      $category=$this->session->userdata('categ');
+      $product['product']=$this->Products_model->get_all_products_sort_category($sortBy,$category);
+      $product['categories']=$this->Products_model->get_all_categories();
+      $product['category']=$category;
+    }
+  if(($this->session->userdata('cart')['total_items'])==0)
+    {
+    $empty=array('total_items'=>0);
+    $cart=$this->session->set_userdata('cart',$empty);
+    }
+    else
+    {
+      $cart = $this->session->userdata('cart'); 
+    }
+  if($sortBy=="quantity_sold")
+  {
+    $sortBy="Most Popular";
+  }
+  else if ($sortBy=="price")
+  {
+   $sortBy="Price (low-high)" ;
+  }
+  $this->session->set_userdata('sortBy',$sortBy);
   $this->load->view('products',$product);
  }
 
@@ -39,6 +83,8 @@ class Welcome extends CI_Controller {
       $cart = $this->session->userdata('cart'); 
     }
 
+  $this->session->unset_userdata('sortBy');
+  $this->session->set_userdata('categ',$category);
   $this->load->view('products',$product);
   }
 
