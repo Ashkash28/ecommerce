@@ -189,10 +189,10 @@
 	<div class='header'>
 			<h1>Dashboard</h1>
 				<ul>
-					<li><a class='orders-products' href='/Welcome/search'>Orders</a></li>
-					<li><a class='orders-products' href='/Welcome/product_inventory'>Products</a></li>
+					<li><a class='orders-products' href='/Admins/orders'>Orders</a></li>
+					<li><a class='orders-products' href='#'>Products</a></li>
 				</ul>
-			<p id='log-off'><a class='orders-products' href='/Welcome/admin'>log off</a></p>
+			<p id='log-off'><a class='orders-products' href='/Admins/logout'>log off</a></p>
 	</div>
 
 	<div id="search">
@@ -203,7 +203,7 @@
 	<div class='add-product'>
       <a href="#" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#largeModal">Add Product</a>
  	 </div>
-	<!-- Button trigger modal -->
+	<!-- ADD PRODUCT MODAL -->
 	<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
 	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
@@ -212,14 +212,14 @@
 	        <h1 class="modal-title" id="myModalLabel">Add Product</h1>
 	      </div>
 	      <div class="modal-body">
-	        <div id='main'>
-		<form action='' method='post'>
+	       <div id='main'>
+		<form action='/Admins/update' method='post'>
 			<label>Name: <input class='field' type='text' name='product_name' placeholder='Name of product...'></label>
 			<label>Description: <textarea class='field' name='product_description' placeholder='Description of product...'></textarea></label>
 			<label>Categories: <select class='field' name='product_category' placeholder='Pick a category'>
-				<option value='bridge'>Bridge <a href=''>edit</a>/<a href=''>delete</a></option>
-				<option value='mounment'>Mounument <a href=''>edit</a>/<a href=''>delete</a></option>
-				<option value='statue'>Statue <a href=''>edit</a>/<a href=''>delete</a></option>
+				<option value='bridge'>Bridge</option>
+				<option value='mounment'>Mounument</option>
+				<option value='statue'>Statue</option>
 			</select></label>
 			<label>or add a new cateogry: <input class='field' type='text' name='new_category'></label>
 			<label>Images: <input class='field' type='file' name='image' accept='image/*'></label>
@@ -238,18 +238,12 @@
 				</div>
 				</li>
 			</ul>
-			</form>
 	</div>
 	      </div>
 	      <div class="modal-footer">
 	        <div id='buttons'>
-		<form id='cancel' action='' method='post'>
 			<input class='cancel' type='submit' name='cancel' value='Cancel'>
-		</form>
-		<form id='preview' action '' method='post'>
 			<input class='preview' type='submit' name='preview' value='Preview'>
-		</form>
-		<form id='update' action='' method='post'>
 			<input class='update' type='submit' name='update' value='Update'>
 		</form>
 	</div>
@@ -268,13 +262,16 @@
 			<th>Action</th>
 		</thead>
 		<tbody>
+			<?php
+				foreach($products as $key => $value){
+						?>
 			<tr class="gray">
-				<td><a href="/Welcome/add_product_page"><img class='table-pics' src='http://i.imgur.com/UDhus28.jpg' alt='golden gate bridge'/></a></td>
-				<td>1</td>
-				<td>T-shirt</td>
-				<td>123</td>
-				<td>1000</td>
-				<td>
+				<td><img class='table-pics' src='<?=$value["pic_desc"]?>' alt='golden gate bridge'/></td>
+				<td><?=$value['id']?></td>
+				<td><?=$value['name']?></td>
+				<td><?=$value['inventory_count']?></td>
+				<td><?=$value['quantity_sold']?></td>
+				<td><!--EDIT MODAL-->
 					<a href="#" data-toggle="modal" data-target="#myModal" data-whatever="edit">edit</a>
 					<!-- button activated modal-->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
@@ -330,10 +327,13 @@
 					    </div>
 					  </div>
 					</div>
+					<!-- end of edit module -->
 					<a class="delete" href="/Welcome/product_delete">delete</a>
 				</td>
+				<?php
+			}?>
 			</tr>
-			<tr>
+<!-- 			<tr>
 				<td><a href="#"><img class='table-pics' src='http://i.imgur.com/UDhus28.jpg' alt='golden gate bridge'/></a></td>
 				<td>2</td>
 				<td>T-shirt</td>
@@ -387,7 +387,7 @@
 					<a href="#">edit</a>
 					<a class="delete" href="#">delete</a>
 				</td>
-			</tr>
+			</tr> -->
 	</table>
 
 	<div class="numbers">

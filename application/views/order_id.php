@@ -135,9 +135,9 @@
 		<h1>Dashboard</h1>
 			<ul>
 				<li><a class='orders-products' href='/Admins/orders'>Orders</a></li>
-				<li><a class='orders-products' href='/Welcome/Orders'>Products</a></li>
+				<li><a class='orders-products' href='/Admins/product_inventory'>Products</a></li>
 			</ul>
-		<p id='log-off'><a class='orders-products' href='/Welcome/admin'>log off</a></p>
+		<p id='log-off'><a class='orders-products' href='/Admins/logout'>log off</a></p>
 	</div>
 	<div id='customer-info'>
 		<h4>Order ID: <?=$customer['id']?></h4>
@@ -150,7 +150,7 @@
 			<p>zip: <?=$shipping['zipcode']?></p>
 		</div>
 		<div class = 'shipping-billing-info'>
-			<p>Customer billing info:</p>
+			<p>Customer Billing info:</p>
 			<p>name: <?=$customer['first_name']?> <?=$customer['last_name']?></p>
 			<p>address: <?= $customer['address']?> <?=$customer['address_2']?></p>
 			<p>city: <?= $customer['city']?></p>
@@ -175,8 +175,8 @@
 					<td><?=$product['id']?></td>
 					<td><?=$product['name']?></td>
 					<td>$<?=$product['price']?></td>
-					<td><?=$product['quantity']?></td>
-					<td><?= $product['quantity'] * $product['price']?></td>
+					<td><?=$product['products_quantity']?></td>
+					<td><?= $product['products_quantity'] * $product['price']?></td>
 				</tr>		
 		<?php }
 		} ?>
@@ -205,12 +205,12 @@
 			<div class='order-shipped'>
 				<p>Status: shipped</p>
 			</div>
-<?php } elseif($product['order_status'] == 'Order in process')
+<?php } elseif($product['order_status'] == 'Order in Process')
 { ?>
 				<div class='order-process'>
 					<p>Status: Order in Process</p>
 				</div>
-<?php } else { ?>
+<?php } elseif ($product['order_status'] == 'Cancelled') { ?>
 				<div class='order-cancelled'>
 					<p>Status: Cancelled</p>
 				</div>
@@ -220,7 +220,7 @@
 			$total = 0;
 			foreach($products as $product)
 				{
-					$temp = $product['quantity'] * $product['price'];
+					$temp = $product['products_quantity'] * $product['price'];
 					$total= $total + $temp;
 				}
 				echo $total;

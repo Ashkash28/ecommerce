@@ -11,11 +11,13 @@ class Admin extends CI_Model
 	function get_orders_with_customers()
 	{
 
-		$query = "SELECT customers.*, orders.*
+		$query = "SELECT customers.*, orders.id AS order_id, orders.order_date, orders.order_status, products.*, products_has_orders.products_quantity
 					FROM orders
 					LEFT JOIN customers ON orders.customers_id = customers.id
-					GROUP BY orders.id
-					ORDER BY orders.id DESC";
+					LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
+					LEFT JOIN products ON products_has_orders.products_id = products.id
+					GROUP BY order_id
+					ORDER BY orders_id DESC";
 
 		return $this->db->query($query)->result_array();
 	}
@@ -41,31 +43,62 @@ class Admin extends CI_Model
 
 	function get_orders_with_products($id)
 	{
-		return $this->db->query("SELECT orders.*, products.*
+		return $this->db->query("SELECT orders.*, products.*, products_has_orders.products_quantity
 									FROM orders
 									LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
 									LEFT JOIN products ON products_has_orders.products_id = products.id
 									WHERE orders.id = ?", array($id))->result_array();
 	}
-	function update_status($status, $id)
+
+	function get_orders_with_product()
 	{
-		return $this->db->query("UPDATE orders SET order_status = ?
-									WHERE orders.id = ?", array($status, $id))->result_array();
+		return $this->db->query("SELECT orders.*, products.*,pictures.name AS pic_name, pictures.description AS pic_desc, products_has_orders.products_quantity
+									FROM orders
+									LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
+									LEFT JOIN products ON products_has_orders.products_id = products.id
+									LEFT JOIN pictures ON products.id = pictures.products_id
+									ORDER BY products.id ASC")->result_array();
 	}
 
-	// function get_order_by_id($id)
+	function update_status($status, $id)
+	{
+		$query = "UPDATE orders SET order_status = ?
+					WHERE orders.id = ?";
+		$values = array($status['order_status'], $id);
+		return $this->db->query($query, $values);
+	}
+
+	function get_all_pictures_with_products()
+	{
+		return $this->db->query('SELECT pictures.name AS pic_name, pictures.description AS pic_desc, products.*
+									FROM pictures
+									LEFT JOIN products ON products.id = pictures.products_id;')->result_array();
+	}
+
+	function get_user($name)
+	{		return $this->db->query('SELECT * FROM customers WHERE email LIKE ? ORDER BY first_name ASC', $name.'%')->result_array();
+	}
+
+
+	// function get_lead($lead_data = NULL)
 	// {
-	// 	return $this->db->query("SELECT customers.*,
-	// 		orders.id AS orders_id, orders.order_date AS orders_date, orders.total, 
-	// 		products.name AS products_name, products.description AS products_desc, products.category, products.price, products.inventory_count, products.quantity_sold, products.id as products_id,
-	// 		products_has_orders.orders_id
-	// 		FROM customers
-	// 		RIGHT JOIN shipping_information on shipping_information.customers_id = customers.id
-	// 		LEFT JOIN orders on customers.id = orders.customers_id
-	// 		LEFT JOIN products_has_orders on orders.id = products_has_orders.orders_id
-	// 		LEFT JOIN products on products_has_orders.products_id = products.id
-	// 		WHERE orders.id = ?
-	// 		ORDER BY products_id asc", array($id))->result_array();
+	// 	$sql = "SELECT * FROM ... LIMIT ? OFFSET ?";
+
+	// 	if($lead_data == NULL)
+	// 		$where = array(LEAD_LIMIT, 0);
+
+	// 	else if(isset($lead_data['page_number']) && isset($lead_data['search']))
+	// 	{
+	// 		if($lead_data['search'] == "")
+	// 			$where = array(LEAD_LIMIT, $lead_data['page_number']);
+	// 		else
+	// 		{
+	// 			if(is_array($lead_data['search']))
+	// 			{
+	// 				$sql = "SELECT * from ... WHERE "
+	// 			}
+	// 		}
+	// 	}
 	// }
 
 }
