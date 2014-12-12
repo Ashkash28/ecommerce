@@ -33,8 +33,7 @@ class Welcome extends CI_Controller {
   $this->load->model('Products_model');
 
   if(!$this->session->userdata('categ'))
-    {
-      echo "reached if loop";
+    {      
       $product['product']=$this->Products_model->get_all_products_sort($sortBy);
       $product['categories']=$this->Products_model->get_all_categories();
       $product['category']='All Products';

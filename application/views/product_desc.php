@@ -6,10 +6,11 @@
 	
 	body {
 		width: 970px;
+		background-color: #CEE3F6;
 	}
 	.header {
-	 background-color: black;
-	 height: 60px;
+	background-color: #81BEF7;
+	 border-radius: 20px;
 	 color: white;
 	}
 
@@ -48,6 +49,7 @@
 	img{
 		margin-top: 10px;
 		margin-right: 5px;
+		border-radius: 20px;
 	}
 	.description {
 		width: 500px;
@@ -69,13 +71,16 @@
 		margin-left: 650px;
 		font-size: 12px;
 	}
+	.selectOption{
+		border-radius: 20px;
+	}
 
 </style>
 </head>
 
 <body>
  	<div class="header">
- 		<h2 id="title">Dojo eCommerce</h2>
+ 		<h2 id="title">BuyAmericaDotCom</h2>
  		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (<?= $this->session->userdata('cart')['total_items'] ?>)</a></h2>
  	</div>
 	<div class="main_body">
@@ -100,13 +105,13 @@
 		<div class='description'>
 			<p><?=$product['description']?></p>
 			<form action="/Welcome/add_item_to_cart" method="post">
-				<select name="quantity">
+				<select class="selectOption" name="quantity">
 					<option  value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>
 					<option  value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
 					<option  value='3'>3 ($<?= number_format($product['price']*3,2)?>)</option>
 				</select>
 				<input type='hidden' name='product_id' value='<?=$product['id']?>' />
-				<input type='submit' name='buy' value='Buy'>
+				<input class="selectOption" type='submit' name='buy' value='Buy'>
 			</form>
 		</div>
 	</div>

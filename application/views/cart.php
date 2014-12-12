@@ -4,8 +4,9 @@
 
 <style type="text/css">
 .header	{
-	background-color: black;
-	height: 60px;
+ 	background-color: #81BEF7;
+	 border-radius: 20px;
+	 height: 60px;
 	color: white;
 }
 
@@ -22,16 +23,17 @@
 }
 
 #cartTable{
-	border: solid 1px black;
+	border: solid 1px #81BEF7;
 	border-collapse: collapse;
+	border-radius: 20px;
 	margin-top: 30px;
 	margin-left: 150px;
 }
 
 #item{
 	width: 250px;
-	border: solid 1px black;
-	background-color: gray;
+	border: solid 1px #81BEF7;
+	background-color: #0000FF;
 	font-weight: bold;
 	padding-left: 5px;
 
@@ -39,16 +41,16 @@
 
 #price{
 	width: 100px;
-	border: solid 1px black;
-	background-color: gray;
+	border: solid 1px #81BEF7;
+	background-color: #0000FF;
 	font-weight: bold;
 	padding-left: 5px;
 }
 
 #quantity{
 	width: 60px;
-	border-bottom: solid 1px black;
-	background-color: gray;
+	border-bottom: solid 1px #81BEF7;
+	background-color: #0000FF;
 	font-weight: bold;
 	padding-left: 5px;
 	border-right: none;
@@ -61,16 +63,16 @@
 #update{
 	width: 30px;
 	border-left: none;
-	border-bottom: solid 1px black;
-	background-color: gray;
+	border-bottom: solid 1px #81BEF7;
+	background-color: #0000FF;
 	font-weight: bold;
 	padding-left: 5px;
 }
 
 #total{
 	width: 100px;
-	border: solid 1px black;
-	background-color: gray;
+	border: solid 1px #81BEF7;
+	background-color: #0000FF;
 	font-weight: bold;
 	padding-left: 5px;
 }
@@ -97,11 +99,12 @@ button{
 }
 td{
 	padding-left: 5px;
-	border-right: solid black 1px;
+	border-right: solid #81BEF7 1px;
 }
 
 body{
 	width: 970px;
+	background-color: #CEE3F6;
 }
 
 .total{
@@ -114,6 +117,8 @@ body{
 
 #shipping, #billing{
 	margin-left: 150px;
+	display: inline-block;
+	vertical-align: top;
 }
 #shoppingCartColor{
 	color: white;
@@ -166,7 +171,7 @@ body{
  </head>
  <body>
  	<div class="header">
- 		<h2 id="title">Dojo eCommerce</h2>
+ 		<h2 id="title">BuyAmericaDotCom</h2>
  		
 <?php 
 		if((!$this->session->userdata('cart'))OR (count($cart)<1))

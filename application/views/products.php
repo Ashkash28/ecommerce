@@ -28,9 +28,12 @@
 	
 	body {
 		width: 970px;
+		background-color: #CEE3F6;
+
 	}
 	.header {
-	 background-color: black;
+	 background-color: #81BEF7;
+	 border-radius: 20px;
 	 height: 60px;
 	 color: white;
 	}
@@ -55,7 +58,8 @@
 	}
 
 	.products_index{
-		border: solid 1px black;
+		border: solid 1px #81BEF7;
+		border-radius: 20px;
 		width: 200px;
 		margin-top: 10px;
 		margin-right: 10px;
@@ -63,7 +67,8 @@
 
 	.products_view{
 		
-		border: solid 1px black;
+		border: solid 1px #81BEF7;
+		border-radius: 20px;
 		width: 750px;
 		margin-top: 10px;
 
@@ -88,8 +93,34 @@
 	}
 
 	.category {
-		font-size: 32px;
+/*		font-size: 32px;*/
 		margin-right: 300px;
+		padding-left: 10px;
+	}
+	img{
+	border-radius: 20px;	
+	}
+	#page{
+		display: inline-block;
+		vertical-align: top;
+		margin-left: 500px;
+		margin-top: -50px;
+	}
+
+	#search{
+		border-radius: 20px;
+		margin-top: 10px;
+		margin-left: 10px;
+	}
+
+	#sortBy{
+		border-radius: 20px;
+		margin-left: 10px;
+		/*margin-top: -10px;*/
+	}
+
+	#formSort{
+	margin-top: -10px;	
 	}
 
 </style>
@@ -97,7 +128,7 @@
 
 <body>
  	<div class="header">
- 		<h2 id="title">Dojo eCommerce</h2>
+ 		<h2 id="title">BuyAmericaDotCom</h2>
  		<h2 id="shoppingCart"><a id="shoppingCartColor" href="/Welcome/cart">Shopping Cart (<?= $this->session->userdata('cart')['total_items'] ?>)</a></h2>
  	</div>
 	<div class="main_body">
@@ -120,20 +151,24 @@
 		</div>
 		<div class='products_view'>
 			<div class='products_title'>
-				<p class='category'><?=$category?></p>
-				<p><a href="">first</a>| </p>
-				<p><a href="">previous</a>| </p>
-				<p>2| </p>
-				<p><a href="">next</a></p>
+				<h2 class='category'><?=$category?></h2>
+				<div id="page">
+					<p><a href="">first</a>| </p>
+					<p><a href="">previous</a>| </p>
+					<p>2| </p>
+					<p><a href="">next</a></p>
+				</div>
 			</div>
-			<p>Sorted by: <?=$this->session->userdata('sortBy')?></p>
-			<form id="formSort" action="/Welcome/sortBy" method="post">
-				<select id="sortBy" name="sortBy">
-					<option value='blank'>-Sort By-</option>
-					<option value='price'>Price (low-high)</option>
-					<option value='quantity_sold'>Most Popular</option>
-				</select>
-			</form>
+			<div>
+				<p class='category'>Sorted by: <?=$this->session->userdata('sortBy')?></p>
+				<form class='category' id="formSort" action="/Welcome/sortBy" method="post">
+					<select id="sortBy" name="sortBy">
+						<option value='blank'>-Sort By-</option>
+						<option value='price'>Price (low-high)</option>
+						<option value='quantity_sold'>Most Popular</option>
+					</select>
+				</form>
+			</div>
 			<div class='products'>
 <?php 
 			foreach($product as $key)
