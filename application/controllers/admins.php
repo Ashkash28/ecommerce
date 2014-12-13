@@ -59,9 +59,6 @@ class Admins extends CI_Controller {
     // var_dump($status);
     // die();
 
-    
-
-    
     //update database
     $status_update=$this->Admin->update_status($status_details, $id);
 
@@ -85,19 +82,94 @@ class Admins extends CI_Controller {
   $this->load->view('product_inventory', $results);
  }
 
-  public function change_status()
-  {
-    $this->load->model('Admin');
-    $status = $this->input->post('status');
-    $id = $this->input->post('id');
-    $status_details = array(
-                      'order_status' => $status);
+ public function add_product()
+ {
+  $this->load->model('Admin');
 
-    var_dump($status_details);
-    die();
-    //update database
-    $stats_update = $this->Admin->update_status($status_details, $id);
+ }
+
+ public function edit_product($id)
+ {
+  $this->load->model('Admin');
+  $product_name = $this->input->post('product_name');
+  $product_description = $this->input->post('product_description');
+  $product_category = $this->input->post('product_category');
+  $img_src = $this->input->post('img_src');
+
+  $product_update = array(
+                      'product_name' => $product_name,
+                      'product_description' => $product_description,
+                      'product_category' => $product_category,
+                      'img_src'=>$img_src
+                      );
+
+  // var_dump($product_update);
+  // die();
+
+  $this->Admin->update_product($product_update, $id);
+
+  $results['products'] = $this->Admin->get_all_pictures_with_products();
+
+  // var_dump($results);
+  // die();
+
+  $this->load->view('product_inventory', $results);
+
+ }
+
+ public function insert_product()
+ {
+  $this->load->model('Admin');
+  $product_name = $this->input->post('product_name');
+  $product_description = $this->input->post('product_description');
+  if($this->input->post('new_category') != NULL)
+  {
+    $product_category = $this->input->post('new_category');
   }
+  else
+  {
+    $product_category = $this->input->post('product_category');
+  }
+  $product_price = $this->input->post('product_price');
+  $inventory_count = $this->input->post('inventory_count');
+
+
+  $product_insert = array(
+                    'product_name' => $product_name,
+                    'product_description' => $product_description,
+                    'product_category' => $product_category,
+                    'product_price' => $product_price,
+                    'inventory_count' => $inventory_count,
+                    );
+
+  $img_name = $this->input->post('img_name');
+  $img_url = $this->input->post('img_url');
+
+  $picture_insert = array(
+                    'img_name' => $img_name,
+                    'img_url' => $img_url
+                    );
+  $results['products']= $this->Admin->insert_product($product_insert);
+  
+  $this->Admin->insert_picture($picture_insert, $results['products']);
+  // var_dump($results);
+  // die();
+
+  redirect('/Admins/product_inventory');
+
+ }
+
+
+public function product_delete($id)
+{
+  $this->load->model('Admin');
+  $this->Admin->update_inventory_count($id);
+  redirect('/Admins/product_inventory');
+
+}
+
+
+
 
   // public function update()
   // {
@@ -116,86 +188,94 @@ class Admins extends CI_Controller {
   public function search()
   {
     $this->load->model('Admin');
-    $name = $this->input->post('search');
-
-    $customer_data['customers'] = $this->Admin->get_user($name);
-    $this->load->view('partial', $customer_data);
+    $search = $this->input->post('order_search');
+    $customer_data['customers'] = $this->Admin->search_customers($search);
+    $this->load->view('search', $customer_data);
   }
 
-  public function pagination($pages, $search_data)
+  public function search_product()
   {
-    $data['html'] = "";
+    $this->load->model('Admin');
+    $search = $this->input->post('search');
+    $product_data['products'] = $this->Admin->search_products($search);
+    $this->load->view('product_inventory', $product_data);
 
-    // get pagination buttons based on order id
-    if(isset($search_data['order_id']))
-    {
-      foreach(range(1, $pages) as $page)
-      {
-        $this->view_data = array(
-          'search' => $search_data['first_name'],
-          'page' => $page
-          );
-
-        $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE); 
-      }
-    }
-    // get pagination buttons based on first_name search
-    elseif(isset($search_data['first_name']))
-    {
-      foreach(range(1, $pages) as $page)
-      {
-        $this->view_data = array(
-          'search' => $search_data['first_name'],
-          'page' => $page
-          );
-
-        $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
-
-      }
-    }
-
-    elseif(isset($search_data['order_date']))
-    {
-      foreach(range(1, $pages) as $page)
-      {
-        $this->view_data = array(
-          'search' => $search_data['order_date'],
-          'page' => $page
-          );
-
-        $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
-      }
-    } 
-
-    elseif(isset($search_data['address']))
-    {
-      foreach(range(1, $pages) as $page)
-      {
-        $this->view_data = array(
-          'search' => $search_data['address'],
-          'page' => $page
-          );
-
-        $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
-      }
-    }
-
-    else
-    {
-      $search = $search_data[0]. ',' .$search_data[1];
-      foreach(range(1, $pages) as $page)
-      {
-        $this->view_data = array(
-          'search' => $search,
-          'page' => $page
-          );
-
-        $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
-      }
-    }
-
-    return $data['html'];
   }
+
+  // public function pagination($pages, $search_data)
+  // {
+  //   $data['html'] = "";
+
+  //   // get pagination buttons based on order id
+  //   if(isset($search_data['order_id']))
+  //   {
+  //     foreach(range(1, $pages) as $page)
+  //     {
+  //       $this->view_data = array(
+  //         'search' => $search_data['first_name'],
+  //         'page' => $page
+  //         );
+
+  //       $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE); 
+  //     }
+  //   }
+  //   // get pagination buttons based on first_name search
+  //   elseif(isset($search_data['first_name']))
+  //   {
+  //     foreach(range(1, $pages) as $page)
+  //     {
+  //       $this->view_data = array(
+  //         'search' => $search_data['first_name'],
+  //         'page' => $page
+  //         );
+
+  //       $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
+
+  //     }
+  //   }
+
+  //   elseif(isset($search_data['order_date']))
+  //   {
+  //     foreach(range(1, $pages) as $page)
+  //     {
+  //       $this->view_data = array(
+  //         'search' => $search_data['order_date'],
+  //         'page' => $page
+  //         );
+
+  //       $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
+  //     }
+  //   } 
+
+  //   elseif(isset($search_data['address']))
+  //   {
+  //     foreach(range(1, $pages) as $page)
+  //     {
+  //       $this->view_data = array(
+  //         'search' => $search_data['address'],
+  //         'page' => $page
+  //         );
+
+  //       $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
+  //     }
+  //   }
+
+  //   else
+  //   {
+  //     $search = $search_data[0]. ',' .$search_data[1];
+  //     foreach(range(1, $pages) as $page)
+  //     {
+  //       $this->view_data = array(
+  //         'search' => $search,
+  //         'page' => $page
+  //         );
+
+  //       $data['html'] .= $this->load->view('/partial_button', $this->view_data, TRUE);
+  //     }
+  //   }
+
+  //   return $data['html'];
+  // }
 
   public function logout()
   {
@@ -203,6 +283,7 @@ class Admins extends CI_Controller {
     redirect("/Welcome/admin");
   }
 }
+
 
 /* End of file admins.php */
 /* Location: ./application/controllers/admins.php */

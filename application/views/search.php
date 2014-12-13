@@ -10,7 +10,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type='text/script'>
 	$(document).ready(function(){
-		$('#wrapper').on("click", '.page_number', function() {
+		$('#wrapper').on("click", '.page_number', function(){
 			var page = $(this).attr('data-page');
 			var search = $(this).attr('data-search');
 			$.getJSON('/leads/get_leads', { page_number: page, search: search }, function(data){
@@ -25,6 +25,11 @@
 			}, "json");
 			return false;
 		});
+	 // $(document).keypress("#search",function(e) {
+  //      if(e.which == 13) {
+  //         alert('You pressed enter!');
+  //    	 }
+
 		
 		// $('.search-box').on('keyup', function(){
 		// 	$.post(
@@ -154,7 +159,7 @@
 
 		<div id="search">
 			<form class='search-form' action='/admins/search' method='post'>
-					<input class='search-box' type='text' name='search' placeholder='search'>
+					<input class='search-box' type='text' name='order_search' placeholder='search'>
 			</form>
 			<select class="show" name="show">
 				<option value="Show All">Show All</option>
@@ -165,63 +170,62 @@
 					<input id='add-new-product' type='submit' value='Add New Product'>
 			</form> -->
 		</div>
-	<div id='display'>
-		<table>
-			<thead>
-				<th>Order ID</th>
-				<th>Name</th>
-				<th>Date</th>
-				<th>Billing Address</th>
-				<th>Total</th>
-				<th>State of Order</th>
-			</thead>
-			<tbody>
-				<?php
-					foreach($customers as $key => $value) 
-					{
-					
-						?>
+		<div id='display'>
+			<table>
+				<thead>
+					<th>Order ID</th>
+					<th>Name</th>
+					<th>Date</th>
+					<th>Billing Address</th>
+					<th>Total</th>
+					<th>State of Order</th>
+				</thead>
+				<tbody>
+					<?php
+						foreach($customers as $key => $value) 
+						{
+						
+							?>
 
-						<tr class="gray">
-						 	<form action="/Admins/order_id/<?=$value['order_id']?>" method="post" id="search">
-								<td><input type="Submit" name="id_holder" value="<?=$value['order_id']?>"></td>
-								<td><?=$value['first_name']?></td>
-								<td><?=$value['order_date']?></td>
-								<td><?=$value['address']?></td>
-								<td>$<?=$value['products_quantity'] * $value['price']?></td>
-								<td>
-									<select action="/Admins/change_status" autofocus="<?=$value['order_status']?>" id="statusform" name="status" >
-										<option><?=$value['order_status']?></option>
-										<option>Shipped</option>
-										<option>Cancelled</option>
-										<option>Order in Process</option>
-									</select>
-								</td>
-							</form>
-						</tr>
+							<tr class="gray">
+							 	<form action="/Admins/order_id/<?=$value['order_id']?>" method="post" id="search">
+									<td><input type="Submit" name="id_holder" value="<?=$value['order_id']?>"></td>
+									<td><?=$value['first_name']?></td>
+									<td><?=$value['order_date']?></td>
+									<td><?=$value['address']?></td>
+									<td>$<?=$value['products_quantity'] * $value['price']?></td>
+									<td>
+										<select action="/Admins/change_status" autofocus="<?=$value['order_status']?>" id="statusform" name="status" >
+											<option><?=$value['order_status']?></option>
+											<option>Shipped</option>
+											<option>Cancelled</option>
+											<option>Order in Process</option>
+										</select>
+									</td>
+								</form>
+							</tr>
+				  <?php } ?>
+				</tbody>
+			</table>
+		</div>
 
-			  <?php } ?>
-
-			</tbody>
-		</table>
-	</div>
-
-		<!-- <div class="btn-toolbar">
+		<div class="btn-toolbar">
 			<div class="btn-group">
-	<?php 		foreach(range(1, $pages) as $page)
+	<?php 		
+	foreach(range(1, $pages) as $page)
 			{ ?>
 				<button data-search="" class='page_number' data-page='<?= $page; ?>'><?= $page; ?></button>
 			<?php 	} ?>
 
 			</div>	
-		</div> -->
+		</div>
 	</div>
 </body>
 </html>
-			// }
+			<!-- // }
 
 				// else 
-				// 	{ 
+				// 	{ --> 
 <!-- 
 				 <tr>
 				 	<form action="/Admins/order_id/<?=$value['order_id']?>" method="post">
