@@ -160,7 +160,7 @@ class Admins extends CI_Controller {
  }
 
 
-function product_delete($id)
+public function product_delete($id)
 {
   $this->load->model('Admin');
   $this->Admin->update_inventory_count($id);
@@ -191,6 +191,15 @@ function product_delete($id)
     $search = $this->input->post('order_search');
     $customer_data['customers'] = $this->Admin->search_customers($search);
     $this->load->view('search', $customer_data);
+  }
+
+  public function search_product()
+  {
+    $this->load->model('Admin');
+    $search = $this->input->post('search');
+    $product_data['products'] = $this->Admin->search_products($search);
+    $this->load->view('product_inventory', $product_data);
+
   }
 
   // public function pagination($pages, $search_data)

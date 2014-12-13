@@ -41,6 +41,23 @@ class Admin extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
+
+	function get_all_pictures_with_products()
+	{
+		return $this->db->query('SELECT pictures.name AS pic_name, pictures.description AS pic_desc, products.*
+									FROM pictures
+									LEFT JOIN products ON products.id = pictures.products_id;')->result_array();
+	}
+
+	function search_products($search)
+	{
+		return $this->db->query("SELECT pictures.name AS pic_name, pictures.description AS pic_desc, products.*
+									FROM pictures
+									LEFT JOIN products ON products.id =pictures.products_id
+									WHERE products.name LIKE '%$search%'
+									OR	  products.id ='$search';")->result_array();
+	}
+
 	// function get_orders_with_customers_pag()
 	// {
 	// 	$query = "SELECT orders.id AS order_id, customers.*,  orders.order_date, orders.order_status, products.*, products_has_orders.products_quantity
@@ -102,12 +119,7 @@ class Admin extends CI_Model
 		return $this->db->query($query, $values);
 	}
 
-	function get_all_pictures_with_products()
-	{
-		return $this->db->query('SELECT pictures.name AS pic_name, pictures.description AS pic_desc, products.*
-									FROM pictures
-									LEFT JOIN products ON products.id = pictures.products_id;')->result_array();
-	}
+
 
 	function get_user($name)
 	{		

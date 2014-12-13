@@ -196,7 +196,7 @@
 	</div>
 
 	<div id="search">
-		<form class='search-form' action='' method='get'>
+		<form class='search-form' action='/Admins/search_product' method='post'>
 				<input class='search-box' type='text' name='search' placeholder='search'>
 		</form>
 	</div>
