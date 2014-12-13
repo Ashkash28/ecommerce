@@ -17,10 +17,44 @@ class Admin extends CI_Model
 					LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
 					LEFT JOIN products ON products_has_orders.products_id = products.id
 					GROUP BY order_id
-					ORDER BY orders_id DESC";
+					ORDER BY order_id DESC";
 
 		return $this->db->query($query)->result_array();
 	}
+
+
+	function search_customers($search)
+	{
+
+		$query = "SELECT customers.*, orders.id AS order_id, orders.order_date, orders.order_status, products.*, products_has_orders.products_quantity
+					FROM orders
+					LEFT JOIN customers ON orders.customers_id = customers.id
+					LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
+					LEFT JOIN products ON products_has_orders.products_id = products.id
+					WHERE customers.first_name = '$search'
+					OR customers.address = '$search'
+					OR customers.created_at = '$search'
+					OR orders.id = '$search'
+					GROUP BY order_id
+					ORDER BY order_id DESC";
+
+		return $this->db->query($query)->result_array();
+	}
+
+	// function get_orders_with_customers_pag()
+	// {
+	// 	$query = "SELECT orders.id AS order_id, customers.*,  orders.order_date, orders.order_status, products.*, products_has_orders.products_quantity
+	// 			  FROM orders
+	// 			  LEFT JOIN customers ON orders.customers_id = customers.id
+	// 			  LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
+	// 			  LEFT JOIN products ON products_has_orders.products_id = products.id
+	// 			  GROUP BY order_id
+	// 			  ORDER BY orders_id DESC
+	// 			  LIMIT 2";
+
+	// 	return $this->db->query($query)->result_array();
+
+	// }
 
 	function get_orders_with_customer($id)
 	{
@@ -76,32 +110,93 @@ class Admin extends CI_Model
 	}
 
 	function get_user($name)
-	{		return $this->db->query('SELECT * FROM customers WHERE email LIKE ? ORDER BY first_name ASC', $name.'%')->result_array();
+	{		
+		return $this->db->query('SELECT * FROM customers WHERE email LIKE ? ORDER BY first_name ASC', $name.'%')->result_array();
+	}
+
+	function update_product($status, $id)
+	{
+		$query = "UPDATE products
+					INNER JOIN pictures
+					ON products.id = pictures.products_id
+					SET products.name = ?, 
+					products.description = ?,
+					products.category = ?,
+					pictures.description = ?
+					WHERE products.id = ?";
+
+		$values = array($status['product_name'], $status['product_description'], $status['product_category'], $status['img_src'], $id);
+	
+		return $this->db->query($query, $values);
+
+	}
+
+	function insert_product($product)
+	{
+		$query = "INSERT INTO products (products.name, products.description, products.category, products.price, products.inventory_count, products.quantity_sold, products.created_at, products.updated_at)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		$values = array($product['product_name'], $product['product_description'], $product['product_category'], $product['product_price'], $product['inventory_count'], 0, 'NOW()', 'NOW()');
+
+		$this->db->query($query, $values);
+		$product_id=mysql_insert_id();
+		return $product_id;
+
+	}
+
+	function insert_picture($picture, $product_id)
+	{
+		$query = "INSERT INTO pictures (name, description, created_at, updated_at, products_id)
+				  VALUES (?, ?, ?, ?, ?)";
+		$values = array($picture['img_name'], $picture['img_url'], 'NOW()', 'NOW()', $product_id);
+
+		 $this->db->query($query, $values);
+	}
+
+	function update_inventory_count($id)
+	{
+		$this->db->query("UPDATE products SET products.inventory_count = 0 WHERE products.id = $id");
+
 	}
 
 
-	// function get_lead($lead_data = NULL)
+
+
+
+
+
+	// function get_order($order_data = NULL)
 	// {
-	// 	$sql = "SELECT * FROM ... LIMIT ? OFFSET ?";
+	// 	$sql = "SELECT customers.*, orders.id AS order_id, orders.order_date, orders.order_status, products.*, products_has_orders.products_quantity
+	// 				FROM orders
+	// 				LEFT JOIN customers ON orders.customers_id = customers.id
+	// 				LEFT JOIN products_has_orders ON orders.id = products_has_orders.orders_id
+	// 				LEFT JOIN products ON products_has_orders.products_id = products.id
+	// 				GROUP BY order_id
+	// 				ORDER BY order_id DESC
+	// 				LIMIT ?
+	// 				OFFSET ?";
 
-	// 	if($lead_data == NULL)
-	// 		$where = array(LEAD_LIMIT, 0);
+	// 	if($order_data['search'] == NULL)
+	// 		$where = array(LEAD_LIMIT, 0)
 
-	// 	else if(isset($lead_data['page_number']) && isset($lead_data['search']))
+	// 	elseif(isset($order_data['page_number']) && isset($lead_data['search']))
 	// 	{
-	// 		if($lead_data['search'] == "")
+
+	// 		if($order_data['search'] == "")
 	// 			$where = array(LEAD_LIMIT, $lead_data['page_number']);
 	// 		else
 	// 		{
-	// 			if(is_array($lead_data['search']))
+	// 			if(is_array($order_data['search']))
 	// 			{
-	// 				$sql = "SELECT * from ... WHERE "
+	// 				$sql = ""
 	// 			}
 	// 		}
 	// 	}
 	// }
 
-}
 
+
+
+}
 /* End of file user.php */
 /* Location: ./application/controllers/user.php */

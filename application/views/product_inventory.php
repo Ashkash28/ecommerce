@@ -213,18 +213,23 @@
 	      </div>
 	      <div class="modal-body">
 	       <div id='main'>
-		<form action='/Admins/update' method='post'>
+		<form action='/Admins/insert_product' method='post'>
 			<label>Name: <input class='field' type='text' name='product_name' placeholder='Name of product...'></label>
 			<label>Description: <textarea class='field' name='product_description' placeholder='Description of product...'></textarea></label>
 			<label>Categories: <select class='field' name='product_category' placeholder='Pick a category'>
 				<option value='bridge'>Bridge</option>
-				<option value='mounment'>Mounument</option>
+				<option value='monument'>Mounument</option>
 				<option value='statue'>Statue</option>
 			</select></label>
-			<label>or add a new cateogry: <input class='field' type='text' name='new_category'></label>
-			<label>Images: <input class='field' type='file' name='image' accept='image/*'></label>
-			<!-- needs jquery draggable content -->
-			<ul>
+			<label>or add a new category: <input class='field' type='text' name='new_category'></label>
+			<label>Price: <input class='field' type='text' name='product_price' placeholder='Price'></label>
+			<label>Inventory Count: <input class='field' type='text' name='inventory_count' placeholder='inventory count'></label>
+			<!-- <label>Images: <input class='field' type='tex' name='image' accept='image/*'></label> -->
+			<label>Image name: <input class='field' type='text' name='img_name' placeholder='image name'></label>
+			<label>Add Image URL here: <input type='text' name='img_url' placeholder='Image URL here'></label>
+
+			<!-- needs jquery draggable content
+			<!- <ul>
 				<li><div class='image'><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
 					<img src=''>img.png <input type='radio' name='main' value='main'>Main
 				</div>
@@ -237,7 +242,7 @@
 					<img src=''>img.png <input type='radio' name='main' value='main'>Main
 				</div>
 				</li>
-			</ul>
+			</ul> -->
 	</div>
 	      </div>
 	      <div class="modal-footer">
@@ -246,7 +251,7 @@
 			<input class='preview' type='submit' name='preview' value='Preview'>
 			<input class='update' type='submit' name='update' value='Update'>
 		</form>
-	</div>
+		</div>
 	      </div>
 	    </div>
 	  </div>
@@ -271,7 +276,8 @@
 				<td><?=$value['name']?></td>
 				<td><?=$value['inventory_count']?></td>
 				<td><?=$value['quantity_sold']?></td>
-				<td><!--EDIT MODAL-->
+				<td>
+					<!--EDIT MODAL-->
 					<a href="#" data-toggle="modal" data-target="#myModal" data-whatever="edit">edit</a>
 					<!-- button activated modal-->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
@@ -283,18 +289,19 @@
 					      </div>
 					      <div class="modal-body">
 					        <div id='main'>
-						<form action='' method='post'>
+							<form action='/Admins/edit_product/<?=$value['id']?>' method='post'>
 							<label>Name: <input class='field' type='text' name='product_name' placeholder='Name of product...'></label>
 							<label>Description: <textarea class='field' name='product_description' placeholder='Description of product...'></textarea></label>
 							<label>Categories: <select class='field' name='product_category' placeholder='Pick a category'>
-								<option value='bridge'>Bridge <a href=''>edit</a>/<a href=''>delete</a></option>
-								<option value='mounment'>Mounument <a href=''>edit</a>/<a href=''>delete</a></option>
-								<option value='statue'>Statue <a href=''>edit</a>/<a href=''>delete</a></option>
+								<option value='bridge'>Bridge</option>
+								<option value='monument'>Monument</option>
+								<option value='statue'>Statue</option>
 							</select></label>
-							<label>or add a new cateogry: <input class='field' type='text' name='new_category'></label>
-							<label>Images: <input class='field' type='file' name='image' accept='image/*'></label>
+							<label>or add a new category: <input class='field' type='text' name='new_category'></label>
+							<!-- <label>Images: <input class='field' type='file' name='image' accept='image/*'></label> -->
+							<label>Add Image URL here: <input type='text' name='img_src' placeholder='Image URL here'></label>
 							<!-- needs jquery draggable content -->
-							<ul>
+							<!-- image upload in beta testing <ul>
 								<li><div class='image'><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
 									<img src=''>img.png <input type='radio' name='main' value='main'>Main
 								</div>
@@ -307,28 +314,22 @@
 									<img src=''>img.png <input type='radio' name='main' value='main'>Main
 								</div>
 								</li>
-							</ul>
-							</form>
+							</ul> -->
 						</div>
 					      </div>
 					      <div class="modal-footer">
-					        <div id='buttons'>
-						<form id='cancel' action='' method='post'>
-							<input class='cancel' type='submit' name='cancel' value='Cancel'>
-						</form>
-						<form id='preview' action '' method='post'>
-							<input class='preview' type='submit' name='preview' value='Preview'>
-						</form>
-						<form id='update' action='' method='post'>
-							<input class='update' type='submit' name='update' value='Update'>
-						</form>
-					</div>
+					      	<div id='buttons'>
+					      		<input class='cancel' type='submit' name='cancel' value='Cancel'>
+					      		<input class='preview' type='submit' name='preview' value='Preview'>
+					      		<input class='update' type='submit' name='update' value='Update'>
+					      	</form>
+							</div>
 					      </div>
 					    </div>
 					  </div>
 					</div>
 					<!-- end of edit module -->
-					<a class="delete" href="/Welcome/product_delete">delete</a>
+					<a class="delete" href="/Admins/product_delete/<?= $value['id']?>">delete</a>
 				</td>
 				<?php
 			}?>
