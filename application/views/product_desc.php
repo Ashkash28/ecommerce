@@ -98,7 +98,7 @@
 			{
 				if($prod_pictures[$i]['main']!=1)
 				{ ?>
-				<img src="<?=$prod_pictures[$i]['description']?>" alt="Smiley face" height="50" width="50">
+				<img src="<?=$prod_pictures[$i]['description']?>" alt="Smiley face" height="75" width="75">
 	<?php 		} 
 			} ?>
 		</div>
@@ -124,11 +124,11 @@
 				$products_id=$categories[$i]['id'];
 
 					for($j=0;$j<count($all_pictures);$j++)
-					if(($all_pictures[$j]['products_id'])==$products_id)
+					if(((($all_pictures[$j]['products_id'])==$products_id))&($all_pictures[$j]['main'])==1)
 						{ ?>
 							<div class='products'>
 								<div>
-									<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="<?=$all_pictures[$j]['description']?>" alt="Smiley face" height="75" width="75"></a>
+									<a href="/Welcome/product_desc/<?=$categories[$i]['id']?>"><img src="<?=$all_pictures[$j]['description']?>" alt="Smiley face" height="90" width="90"></a>
 									<p>$<?= number_format($categories[$i]['price'],2)?></p>
 									<p><?=$categories[$i]['name']?></p>
 								</div>			

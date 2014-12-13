@@ -2,7 +2,6 @@
 
 class Welcome extends CI_Controller {
 
- 
 //product page functions
  public function index()
  {
@@ -309,7 +308,8 @@ public function search()
   $empty=array('total_items'=>0);
   $cart=$this->session->set_userdata('cart',$empty);
   $cart = $this->session->userdata('cart');
-  $this->load->view('pay_success',$order_id);
+  // $this->load->view('pay_success',$order_id);
+  redirect('/');
  }
 
 //admin controller functions
