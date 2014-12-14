@@ -286,10 +286,12 @@ public function search()
     'bCity' => $this->input->post('bCity'),
     'bState' => $this->input->post('bState'),
     'bZipcode' => $this->input->post('bZipcode'),
-    'cardnum' => $this->input->post('cardnum'),
-    'security' => $this->input->post('security'),
-    'month' => $this->input->post('month'),
-    'year' => $this->input->post('year'),
+    
+    //this is not saved to db, instead use Stripe to process the card
+    // 'cardnum' => $this->input->post('cardnum'),
+    // 'security' => $this->input->post('security'),
+    // 'month' => $this->input->post('month'),
+    // 'year' => $this->input->post('year'),
   );
     
   //now, submit all order data to the database
@@ -308,8 +310,7 @@ public function search()
   $empty=array('total_items'=>0);
   $cart=$this->session->set_userdata('cart',$empty);
   $cart = $this->session->userdata('cart');
-  // $this->load->view('pay_success',$order_id);
-  redirect('/');
+  $this->load->view('pay_success');
  }
 
 //admin controller functions

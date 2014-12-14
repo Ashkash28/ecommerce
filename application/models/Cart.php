@@ -20,12 +20,10 @@ class Cart extends CI_Model {
   	$query = "INSERT INTO `ecommerce`.`customers` 
 		(`first_name`, `last_name`, `address`, 
 		`address_2`, `city`, `state`, `zipcode`, 
-		`card`, `security_code`, `exp_month`, `exp_year`, 
 		`created_at`, `updated_at`) 
-		VALUES (?,?,?,?,?,?,?,?,?,?,?,Now(),Now())";
+		VALUES (?,?,?,?,?,?,?,Now(),Now())";
 	$values = array($billing['bfname'],$billing['blname'],$billing['baddress'],
-		 $billing['baddress2'], $billing['bCity'],$billing['bState'], $billing['bZipcode'], 
-		$billing['cardnum'],$billing['security'], $billing['month'],$billing['year']);
+		 $billing['baddress2'], $billing['bCity'],$billing['bState'], $billing['bZipcode']);
    $this->db->query($query, $values);
    $customer_id=mysql_insert_id();
    return  $customer_id;

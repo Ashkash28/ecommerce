@@ -1,7 +1,22 @@
  <html>
  <head>
  	<title>ecommerce cart</title>
+ 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			
+			// $('#stripe').click(function() 
+			// {   
+			// 	alert("got to jquery Thanks For Shopping at BuyAmericaDotCom");
+				
+			// 	$('#formPay').submit();
+			// }); 
+    		
+
+		});
+	</script>
 <style type="text/css">
 .header	{
  	background-color: #81BEF7;
@@ -91,11 +106,12 @@
 button{
 	margin-left: 10px;
 	margin-top: -15px;
-	background-color: green;
+	background-color: #81BEF7;
 	color: white;
-	box-shadow: 5px 5px 5px black;
+	box-shadow: 3px 3px 3px #0000FF;
 	height: 30px;
-	border: solid 1px black;
+	border: solid 1px #81BEF7;
+	border-radius: 5px;
 }
 td{
 	padding-left: 5px;
@@ -145,24 +161,9 @@ body{
 	width: 175px;
 }
 
-.ccbox{
-	margin-left: 24px;
-	width: 175px;
-}
-.scbox{
-	margin-left: 15px;
-	width: 175px;
-}
-.month{
-	margin-left: 2px;
-}
-
 .pay{
-	margin-left: 200px;
-	background-color: blue;
-	color: white;
-	box-shadow: 5px 5px 5px black;
-	border: solid 1px black;
+	margin-left: 120px;
+	margin-top: 35px;
 }
 
 
@@ -254,7 +255,7 @@ body{
 	</div>
 	<div id="shipping">
 	    <h2>Shipping Information</h2>
-		   <form action="/Welcome/pay" method="post">
+		   <form id="formPay" action="/Welcome/pay" method="post">
 		    <p>First Name: <input type="text" name="sfname" value="James"></p>
 		    <p>Last Name: <input  type="text" name="slname" value="Kirk"</p>
 		    <p>Address: <input class="abox" type="text" name="saddress" value="123 Galaxy way"></p>
@@ -273,26 +274,19 @@ body{
 		    <p>City: <input class="cbox" type="text" name="bCity" value="Cape Canaviral"></p>
 		    <p>State: <input class="sbox" type="text" name="bState" value="FL"></p>
 		    <p>Zipcode: <input class="zbox" type="number" name="bZipcode" value="12345"></p>
-		    <p>Card #: <input class="ccbox" type="number" name="cardnum" value="1234567887654321"></p>
-		    <p>Security: <input class="scbox" type="number" name="security" value="123"></p>
-		    <p>Expiration: <select class="month" type="month" name="month">
-							   <option value="(mm)">(mm)</option>
-							   <option value="01">Jan</option>
-							   <option value="02">Feb</option>
-							   <option value="03">Mar</option>
-							   <option value="04">Apr</option>
-							   <option value="05">May</option>
-							   <option value="06">June</option>
-							   <option value="07">July</option>
-							   <option value="08">Aug</option>
-							   <option value="09">Sept</option>
-							   <option value="10">Oct</option>
-							   <option value="11">Nov</option>
-							   <option value="12">Dec</option>
-							</select> / 
-							<input class="year" type="number" min="2009" max="2019" name="year" value="year"></p>
-		    <input class="pay" type="submit" value="Pay">
 		   </form>
+		</form>
+		<?php require_once('/application/config/stripe.config.php'); ?>
+		<form id="stripe" action="/welcome/Pay" method="post" class="pay">
+	      <script
+	        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+	        data-key="<?php echo $stripe['publishable_key']; ?>"
+	        data-amount=<?=($cart['total_price'])?>00
+	        data-name="BuyAmericaDotCom"
+	        data-description="BuyAmericaDotCom ($ <?= number_format($cart['total_price'],2) ?>)"
+	       data-image="/128x128.png">
+	      </script>
+	    </form>	
     </div>
  </body>
  </html>
