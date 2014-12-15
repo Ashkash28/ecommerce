@@ -216,7 +216,7 @@ body{
 	                <td class="item"><?= $value['name'] ?></td>
 	                <td class="price"><?= $value['price'] ?></td>                
 	                <form action="/Welcome/update/<?= $value['id']?>" method="post">
-	                <td><input class="quantity" type="number" min="1" max="10" name="cartQuantity" value="<?= $value['quantity'] ?>"></td>
+	                <td><input class="quantity" type="number" min="1" max=<?=$value['inventory']?> name="cartQuantity" value="<?= $value['quantity'] ?>"></td>
 	                <td class="update"><input type='submit' name="update" value="update">
 	                </form>    <a href="/Welcome/delete/<?= $value['id'] ?>">remove</a></td>
 	                <td class="total">$ <?= number_format($value['total'],2) ?></td>

@@ -161,6 +161,7 @@ public function search()
            'price' => $item['price'],
            'quantity' => $value,
            'total' => ($item['price'] * $value),
+           'inventory' => $item['inventory_count'],
          );
        // continue adding to total price
        $total_price += ($item['price'] * $value);
