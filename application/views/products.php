@@ -126,27 +126,11 @@
 	.outOfStock{
 		color: white;
 		font-weight: bold;
-		margin-left: -150px;
 		background-color: red;
 		border: solid 1px black;
-		display: inline-block;
-		/* Safari */
--webkit-transform: rotate(-45deg);
-
-/* Firefox */
--moz-transform: rotate(-45deg);
-
-/* IE */
--ms-transform: rotate(-45deg);
-
-/* Opera */
--o-transform: rotate(-45deg);
-
-/* Internet Explorer */
-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+		text-align: center;
+		margin-top: 14px;
 		}
-
-
 
 	.pictures{
 		display: inline-block;
@@ -199,13 +183,19 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 				</form>
 			</div>
 			<div class='products'>
-<?php 
-			foreach($product as $key)
+<?php 		foreach($product as $key)
 			{ ?>
-			<div>
-				<a href="/Welcome/product_desc/<?=$key['id']?>"><img src="<?=$key['description']?>" alt="Smiley face" height="200" width="200"></a>
+			<div>	
+				
+<?php 		if($key['inventory_count']<1) 
+			{ ?>				
+				<img class="product_photo" src="<?=$key['description']?>" alt="Smiley face" height="200" width="200">
 				<p class="outOfStock">"  Out of Stock  "</p>
-				<p>$<?= number_format($key['price'],2)?></p>
+<?php 		} else 
+	 			{ ?>
+					<a href="/Welcome/product_desc/<?=$key['id']?>"><img class="product_photo" src="<?=$key['description']?>" alt="Smiley face" height="200" width="200"></a>
+					<p>$<?= number_format($key['price'],2)?></p>
+<?php			}?>				
 				<p><?=$key['name']?></p>
 			</div>
 <?php		} ?>

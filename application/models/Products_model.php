@@ -5,7 +5,7 @@ class Products_model extends CI_Model {
 	{	
 		// $query="SELECT * from products ORDER BY price ASC";
 
-		$query="SELECT products.name, products.price, products.id,pictures.description
+		$query="SELECT products.inventory_count,products.name, products.price, products.id,pictures.description
 			from products
 			join pictures
 			on products.id=pictures.products_id
@@ -16,7 +16,7 @@ class Products_model extends CI_Model {
 
 		function get_all_products_sort($sortBy) 
 	{	
-		$query="SELECT products.name, products.price, products.id,pictures.description
+		$query="SELECT products.inventory_count,products.name, products.price, products.id,pictures.description
 			from products
 			join pictures
 			on products.id=pictures.products_id
@@ -27,7 +27,7 @@ class Products_model extends CI_Model {
 
 		function get_all_products_sort_category($sortBy, $category) 
 	{	
-		$query="SELECT products.name, products.price, products.id,pictures.description
+		$query="SELECT products.inventory_count,products.name, products.price, products.id,pictures.description
 			from products
 			join pictures
 			on products.id=pictures.products_id
@@ -52,7 +52,7 @@ class Products_model extends CI_Model {
 
 	function get_by_category($cat) 
 	{		
-		$query="SELECT products.name, products.price, products.id,pictures.description
+		$query="SELECT products.inventory_count,products.name, products.price, products.id,pictures.description
 			from products
 			join pictures
 			on products.id=pictures.products_id
@@ -77,7 +77,7 @@ class Products_model extends CI_Model {
 
 	function search_products($search)
 	{
-		$query="SELECT products.name, products.price, 
+		$query="SELECT products.inventory_count,products.name, products.price, 
 				products.id,pictures.description
 				from products
 				JOIN pictures

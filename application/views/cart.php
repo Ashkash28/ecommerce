@@ -4,18 +4,7 @@
  	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function()
-		{
-			
-			// $('#stripe').click(function() 
-			// {   
-			// 	alert("got to jquery Thanks For Shopping at BuyAmericaDotCom");
-				
-			// 	$('#formPay').submit();
-			// }); 
-    		
 
-		});
 	</script>
 <style type="text/css">
 .header	{

@@ -99,17 +99,33 @@
 				if($prod_pictures[$i]['main']!=1)
 				{ ?>
 				<img src="<?=$prod_pictures[$i]['description']?>" alt="Smiley face" height="75" width="75">
-	<?php 		} 
+<?php 		} 
 			} ?>
 		</div>
 		<div class='description'>
 			<p><?=$product['description']?></p>
 			<form action="/Welcome/add_item_to_cart" method="post">
+<?php 		if($product['inventory_count']>=3)
+				{ ?>
 				<select class="selectOption" name="quantity">
 					<option  value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>
 					<option  value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
 					<option  value='3'>3 ($<?= number_format($product['price']*3,2)?>)</option>
 				</select>
+<?php 			} 
+					elseif ($product['inventory_count']=2) 
+					{ ?>
+				<select class="selectOption" name="quantity">
+					<option  value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>
+					<option  value='2'>2 ($<?= number_format($product['price']*2,2)?>)</option>
+				</select>
+<?php               }  
+					elseif ($product['inventory_count']=1)
+					{ ?>
+				<select class="selectOption" name="quantity">
+					<option  value='1'>1 ($<?= number_format($product['price']*1,2)?>)</option>					
+				</select>
+<?php				} ?>
 				<input type='hidden' name='product_id' value='<?=$product['id']?>' />
 				<input class="selectOption" type='submit' name='buy' value='Buy'>
 			</form>
